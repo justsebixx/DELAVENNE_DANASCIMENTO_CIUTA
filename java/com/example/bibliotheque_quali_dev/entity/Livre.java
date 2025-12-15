@@ -1,19 +1,13 @@
 package com.example.bibliotheque_quali_dev.entity;
-
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-import java.io.Serializable;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "livres")
 public class Livre{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_livre;
+    private Integer idLivre;
 
     private String titre;
     private String auteur;
@@ -23,12 +17,30 @@ public class Livre{
     private Integer nb_exemplaires;
     private Integer nb_disponibles;
 
-    public Integer getId_livre() {
-        return id_livre;
+    public Livre(Integer idLivre, String titre, String auteur,
+                 String categorie, String isbn, Integer annee,
+                 Integer nb_exemplaires, Integer nb_disponibles)
+    {
+        this.idLivre = idLivre;
+        this.titre = titre;
+        this.auteur = auteur;
+        this.categorie = categorie;
+        this.isbn = isbn;
+        this.annee = annee;
+        this.nb_exemplaires = nb_exemplaires;
+        this.nb_disponibles = nb_disponibles;
     }
 
-    public void setId_livre(Integer id_livre) {
-        this.id_livre = id_livre;
+    public Livre() {
+    }
+
+    // les getters et setters
+    public Integer getIdLivre() {
+        return idLivre;
+    }
+
+    public void setIdLivre(Integer idLivre) {
+        this.idLivre = idLivre;
     }
 
     public String getTitre() {
