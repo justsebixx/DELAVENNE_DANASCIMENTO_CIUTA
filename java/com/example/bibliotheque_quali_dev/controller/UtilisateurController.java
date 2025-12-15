@@ -22,7 +22,7 @@ public class UtilisateurController {
     }
 
     @GetMapping("/{id}")
-    public Utilisateur getLivreById(@PathVariable Integer id) {
+    public Utilisateur getUtilisateurById(@PathVariable Integer id) {
         return utilisateurRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur non trouvé."));
     }

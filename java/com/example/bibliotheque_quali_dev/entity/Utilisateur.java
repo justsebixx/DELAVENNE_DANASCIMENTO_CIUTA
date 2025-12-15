@@ -12,7 +12,7 @@ public class Utilisateur {
     private String prenom;
     private String email;
     private String passwordhash;
-    enum role {bibliothecaire, etudiant, enseignant};
+    private String role;
 
 
     public Utilisateur(Integer idUser, String nom, String prenom, String email, String passwordhash) {
@@ -65,5 +65,13 @@ public class Utilisateur {
 
     public void setPasswordhash(String passwordhash) {
         this.passwordhash = passwordhash;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
