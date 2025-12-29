@@ -1,0 +1,387 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #F8F9FA;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  border-color: #646cff;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+
+  a:hover {
+    color: #747bff;
+  }
+
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/* Header styles */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  background-color: #1B3B6F;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header .nav-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+}
+
+.header .nav-left a {
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1em;
+  transition: color 0.3s;
+}
+
+.header .nav-left a:hover {
+  color: #646cff;
+}
+
+.header .search-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  max-width: 500px;
+}
+
+.header .search-input {
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: none;
+  background-color: #ffffff;
+  color: #333;
+  font-size: 1em;
+  outline: none;
+  transition: box-shadow 0.3s;
+}
+
+.header .search-input:focus {
+  box-shadow: 0 0 8px rgba(100, 108, 255, 0.5);
+}
+
+.header .nav-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header .login-icon {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: transform 0.3s;
+  filter: brightness(0) invert(1);
+}
+
+.header .login-icon:hover {
+  transform: scale(1.1);
+}
+
+main {
+  margin-top: 80px;
+  padding: 20px;
+  padding-bottom: 40px;
+  flex: 1;
+}
+
+/* Footer styles */
+.footer {
+  background-color: #1B3B6F;
+  color: #ffffff;
+  padding: 30px 0 15px;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: auto;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-section {
+  margin-bottom: 20px;
+  min-width: 150px;
+}
+
+.footer-section h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.1em;
+  color: #fff;
+}
+
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-nav a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 0.9em;
+  transition: color 0.3s;
+}
+
+.footer-nav a:hover {
+  color: #646cff;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-bottom p {
+  margin: 0;
+  font-size: 0.85em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Page styles */
+.page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page-container h1 {
+  color: #1B3B6F;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #1B3B6F;
+  padding-bottom: 10px;
+}
+
+.page-container h2 {
+  color: #1B3B6F;
+  font-size: 1.4em;
+  margin-top: 25px;
+}
+
+.page-container p,
+.page-container li {
+  color: #333;
+  line-height: 1.7;
+}
+
+.page-container ul {
+  padding-left: 20px;
+}
+
+.page-container ul li {
+  margin-bottom: 8px;
+}
+
+/* About page */
+.about-section {
+  margin-bottom: 30px;
+}
+
+/* Contact page */
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+@media (max-width: 768px) {
+  .contact-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-info .info-item {
+  margin-bottom: 20px;
+}
+
+.contact-info .info-item strong {
+  color: #1B3B6F;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #1B3B6F;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1em;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #1B3B6F;
+}
+
+.submit-btn {
+  background-color: #1B3B6F;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #142d54;
+}
+
+/* Legal pages */
+.legal-section,
+.privacy-section {
+  margin-bottom: 25px;
+}
+
+/* FAQ page */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faq-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.faq-question {
+  width: 100%;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  text-align: left;
+  color: #1B3B6F;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.faq-question:hover {
+  background-color: #f5f5f5;
+}
+
+.faq-icon {
+  font-size: 1.5em;
+  color: #1B3B6F;
+}
+
+.faq-answer {
+  padding: 15px 20px;
+  border-top: 1px solid #eee;
+  background-color: #f9f9f9;
+}
+
+.faq-answer p {
+  margin: 0;
+}
+
+main h1,
+main p {
+  color: #0F172A;
+}
