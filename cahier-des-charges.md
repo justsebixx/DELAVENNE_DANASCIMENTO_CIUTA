@@ -6,7 +6,7 @@
 **Application de gestion de bibliothèque universitaire**
 
 ### Membres du projet
-*(À compléter – Groupe de 3 maximum)*
+
 - Sebastian-Cristian Ciuta
 - Théo Da Nascimento
 - Baptiste Delavenne
