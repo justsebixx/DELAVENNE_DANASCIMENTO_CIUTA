@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Books from './pages/Books';
 import AddBook from './pages/AddBook';
 import Admin from './pages/Admin';
+import ManageBooks from './pages/ManageBooks';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -28,6 +29,11 @@ function App() {
           <Route path="/admin" element={
             <ProtectedRoute requiredRole="ADMIN">
               <Admin />
+            </ProtectedRoute>
+          } />
+          <Route path="/manage-books" element={
+            <ProtectedRoute requiredRole="ADMIN">
+              <ManageBooks />
             </ProtectedRoute>
           } />
           <Route path="/about" element={<About />} />
