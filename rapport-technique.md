@@ -197,7 +197,14 @@ Développement d'une application web moderne de gestion de bibliothèque univers
 
 ### F. Interface Utilisateur
 - **Responsive Design** : Adaptation mobile/tablette/desktop avec fichier CSS dédié
-- **Navigation** : Header avec menu contextuel selon le rôle (Accueil, Livres, Mes Emprunts, Notifications, Admin, Profil)
+- **Navigation** : 
+  - Desktop : Header avec menu horizontal (Accueil, Livres, Mes Emprunts, Notifications, Admin, Profil)
+  - Mobile (< 482px) : Menu hamburger avec navigation déroulante verticale
+- **Menu Hamburger** :
+  - Bouton avec animation de transformation en croix (X)
+  - Menu déroulant collé au header sur toute la largeur
+  - Animation fluide avec transition max-height
+  - Fermeture automatique lors du clic sur un lien
 - **Recherche en temps réel** : Filtrage instantané des livres sur la page SearchBooks
 - **Gestion d'erreurs** : ErrorBoundary pour capturer les erreurs React
 - **États de chargement** : LoadingSpinner pour les requêtes asynchrones
@@ -596,7 +603,10 @@ CREATE TABLE session_tokens (
 - **Erreur** : Rouge (#dc3545)
 
 ### B. Composants UI
-- **Header** : Navigation sticky avec logo, menu contextuel et badge notifications
+- **Header** : 
+  - Navigation sticky avec logo, menu et badge notifications
+  - Menu hamburger animé pour mobile (< 482px)
+  - Transformation fluide en croix (X) lors de l'ouverture
 - **Cards** : Livres affichés en grille responsive (1-4 colonnes)
 - **Forms** : Validation en temps réel avec messages d'erreur
 - **Buttons** : Boutons primaires/secondaires avec hover effects
@@ -605,12 +615,17 @@ CREATE TABLE session_tokens (
 - **NotificationBadge** : Badge avec compteur de notifications non lues
 - **ErrorBoundary** : Gestion gracieuse des erreurs React
 - **ProtectedRoute** : Composant HOC pour protection des routes
+- **Mobile Navigation** : Menu déroulant pleine largeur collé au header
 
 ### C. Accessibilité
-- **Responsive** : Breakpoints (mobile < 768px, tablet < 1024px, desktop)
+- **Responsive** : 
+  - Breakpoints (mobile < 482px, tablet < 768px, desktop)
+  - Menu hamburger pour écrans < 482px avec animation fluide
+  - Navigation adaptative selon la taille d'écran
 - **Contraste** : Ratio texte/fond respectant WCAG 2.1
 - **Navigation** : Liens clairs et breadcrumb
 - **Messages** : Feedback utilisateur sur toutes les actions
+- **Mobile-First** : Menu déroulant optimisé pour petits écrans
 
 ---
 
@@ -734,5 +749,9 @@ eslint (9.36.0)                        # Linter JavaScript
 ---
 
 **Dernière mise à jour** : 7 janvier 2026  
-**Version du document** : 1.0  
-**Statut du projet** : fini
+**Version du document** : 1.1  
+**Statut du projet** : En cours
+
+**Changelog :**
+- v1.1 (07/01/2026) : Ajout menu hamburger responsive pour mobile
+- v1.0 (07/01/2026) : Version initiale de la documentation
