@@ -6,7 +6,6 @@ function Header() {
             <nav className="nav-left">
                 <Link to="/" className="nav-link">Accueil</Link>
                 <Link to="/books" className="nav-link">Livres</Link>
-                <Link to="/admin" className="nav-link nav-admin">🔐 Admin</Link>
             </nav>
             <div className="search-container">
                 <input type="text" className="search-input" placeholder="Rechercher un livre..." />

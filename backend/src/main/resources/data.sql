@@ -1,12 +1,11 @@
--- Insertion des utilisateurs
--- Mot de passe pour tous: "password123" (hashé avec BCrypt)
+-- Insertion des utilisateurs (mot de passe en clair pour les tests : password123)
 INSERT INTO utilisateurs (nom, prenom, email, passwordhash, role) VALUES
-('Dupont', 'Jean', 'jean.dupont@email.com', '$2a$10$YqZ9X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.', 'ADMIN'),
-('Martin', 'Sophie', 'sophie.martin@email.com', '$2a$10$YqZ9X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.', 'USER'),
-('Bernard', 'Luc', 'luc.bernard@email.com', '$2a$10$YqZ9X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.', 'USER'),
-('Dubois', 'Marie', 'marie.dubois@email.com', '$2a$10$YqZ9X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.', 'USER'),
-('Thomas', 'Pierre', 'pierre.thomas@email.com', '$2a$10$YqZ9X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.', 'USER'),
-('Petit', 'Claire', 'claire.petit@email.com', '$2a$10$YqZ9X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.', 'BIBLIOTHECAIRE');
+('Dupont', 'Jean', 'admin@test.com', 'password123', 'ADMIN'),
+('Martin', 'Sophie', 'user@test.com', 'password123', 'USER'),
+('Bernard', 'Luc', 'luc.bernard@email.com', 'password123', 'USER'),
+('Dubois', 'Marie', 'marie.dubois@email.com', 'password123', 'USER'),
+('Thomas', 'Pierre', 'pierre.thomas@email.com', 'password123', 'USER'),
+('Petit', 'Claire', 'biblio@test.com', 'password123', 'BIBLIOTHECAIRE');
 
 -- Insertion des livres
 INSERT INTO livres (titre, auteur, isbn, categorie, annee, nb_exemplaires, nb_disponibles) VALUES
