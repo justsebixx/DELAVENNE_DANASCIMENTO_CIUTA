@@ -13,14 +13,33 @@ import java.util.List;
 public interface EmpruntRepository extends JpaRepository<Emprunt, Integer> {
     
     int countByDateRetourEffectiveIsNull();
+    
     int countByDateRetourPrevueBeforeAndDateRetourEffectiveIsNull(LocalDate date);
+    
     @Query("SELECT new com.example.bibliotheque_quali_dev.dto.TopLivreStat(l.titre, COUNT(e)) " +
            "FROM Emprunt e JOIN e.livre l " +
            "GROUP BY l.idLivre, l.titre " +
            "ORDER BY COUNT(e) DESC")
     List<TopLivreStat> findTop5MostBorrowedBooks();
+    
     List<Emprunt> findByDateRetourPrevueAndDateRetourEffectiveIsNull(Date dateRetourPrevue);
+    
     @Query("SELECT e FROM Emprunt e WHERE e.dateRetourPrevue < :today AND e.dateRetourEffective IS NULL")
     List<Emprunt> findOverdueEmprunts(@Param("today") Date today);
+
+    /**
+     * Récupère tous les emprunts d'un utilisateur (actifs et passés).
+     */
+    List<Emprunt> findByIdUser(Integer idUser);
+
+    /**
+     * Récupère les emprunts actifs d'un utilisateur (non retournés).
+     */
+    List<Emprunt> findByIdUserAndDateRetourEffectiveIsNull(Integer idUser);
+    
+    /**
+     * Vérifie s'il existe une notification pour un emprunt et un type donné.
+     */
+    boolean existsByIdEmpruntAndType(Integer idEmprunt, String type);
 }
 
