@@ -2,16 +2,13 @@ package com.example.bibliotheque_quali_dev.dto;
 
 public class LoginResponse {
     private String token;
-    private Integer userId;
+    private Integer idUser;
+    private String nom;
+    private String prenom;
+    private String email;
     private String role;
 
     public LoginResponse() {
-    }
-
-    public LoginResponse(String token, Integer userId, String role) {
-        this.token = token;
-        this.userId = userId;
-        this.role = role;
     }
 
     public String getToken() {
@@ -22,12 +19,36 @@ public class LoginResponse {
         this.token = token;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getIdUser() {
+        return idUser;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getRole() {
