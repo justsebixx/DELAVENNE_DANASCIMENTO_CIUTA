@@ -81,18 +81,37 @@ button:focus-visible {
   right: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 20px 40px;
   background-color: #1B3B6F;
   z-index: 1000;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.header .nav-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  flex: 1;
+}
+
+.header .nav-center a {
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1em;
+  transition: color 0.3s;
+}
+
+.header .nav-center a:hover {
+  color: #646cff;
+}
+
 .header .nav-left {
   display: flex;
   align-items: center;
   gap: 20px;
-  flex: 1;
 }
 
 .header .nav-left a {
@@ -107,34 +126,12 @@ button:focus-visible {
   color: #646cff;
 }
 
-.header .search-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  max-width: 500px;
-}
-
-.header .search-input {
-  width: 100%;
-  padding: 10px 15px;
-  border-radius: 20px;
-  border: none;
-  background-color: #ffffff;
-  color: #333;
-  font-size: 1em;
-  outline: none;
-  transition: box-shadow 0.3s;
-}
-
-.header .search-input:focus {
-  box-shadow: 0 0 8px rgba(100, 108, 255, 0.5);
-}
-
 .header .nav-right {
-  flex: 1;
+  position: absolute;
+  right: 40px;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
+  gap: 15px;
 }
 
 .header .login-icon {

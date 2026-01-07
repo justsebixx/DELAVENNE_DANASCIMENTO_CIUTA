@@ -76,7 +76,7 @@ function Login() {
       if (isLogin) {
         // Stockage du token et des informations utilisateur
         localStorage.setItem('token', data.token);
-        localStorage.setItem('userId', data.userId);
+        localStorage.setItem('userId', data.idUser);
         localStorage.setItem('role', data.role);
         
         // Redirection selon le rôle

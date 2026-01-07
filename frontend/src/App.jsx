@@ -4,8 +4,6 @@ import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/ProtectedRoute';
 import ErrorBoundary from './components/ErrorBoundary';
 import Home from './pages/Home';
-import Books from './pages/Books';
-import AddBook from './pages/AddBook';
 import Admin from './pages/Admin';
 import ManageBooks from './pages/ManageBooks';
 import MyBorrows from './pages/MyBorrows';
@@ -17,6 +15,7 @@ import Contact from './pages/Contact';
 import LegalNotice from './pages/LegalNotice';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 import './App.css';
 import Footer from './components/Footer';
 
@@ -29,11 +28,10 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/books" element={<Books />} />
             <Route path="/search-books" element={<SearchBooks />} />
-            <Route path="/add-book" element={<AddBook />} />
             <Route path="/my-borrows" element={<MyBorrows />} />
             <Route path="/notifications" element={<Notifications />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/admin" element={
               <ProtectedRoute requiredRole="ADMIN">
                 <Admin />

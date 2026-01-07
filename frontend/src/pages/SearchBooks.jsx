@@ -101,8 +101,8 @@ function SearchBooks() {
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    livreId: bookId,
-                    userId: parseInt(userId)
+                    idLivre: bookId,
+                    idUser: parseInt(userId)
                 })
             });
 

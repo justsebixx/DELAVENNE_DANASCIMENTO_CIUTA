@@ -76,7 +76,7 @@ public class AuthController {
         utilisateur.setPrenom(registerRequest.getPrenom());
         utilisateur.setEmail(registerRequest.getEmail());
         utilisateur.setPasswordhash(registerRequest.getPassword()); 
-        utilisateur.setRole(Role.valueOf("USER"));
+        utilisateur.setRole(Role.ETUDIANT);
         utilisateurRepository.save(utilisateur);
 
         Map<String, String> response = new HashMap<>();

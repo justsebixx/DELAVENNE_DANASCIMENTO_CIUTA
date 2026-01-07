@@ -8,7 +8,7 @@ function Footer() {
                     <h3>Navigation</h3>
                     <nav className="footer-nav">
                         <Link to="/">Accueil</Link>
-                        <Link to="/books">Livres</Link>
+                        <Link to="/search-books">Livres</Link>
                         <Link to="/about">À propos</Link>
                         <Link to="/contact">Contact</Link>
                     </nav>

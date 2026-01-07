@@ -46,23 +46,25 @@
 
 .filter-btn {
     padding: 10px 20px;
-    border: 2px solid #e0e0e0;
+    border: 2px solid #1976d2;
     background: white;
     border-radius: 5px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
+    color: #1976d2;
 }
 
 .filter-btn:hover {
-    border-color: #007bff;
-    color: #007bff;
+    border-color: #1565c0;
+    color: #1565c0;
+    background: #e3f2fd;
 }
 
 .filter-btn.active {
-    background: #007bff;
+    background: #1976d2;
     color: white;
-    border-color: #007bff;
+    border-color: #1976d2;
 }
 
 .loading {
@@ -120,7 +122,22 @@
 }
 
 .notification-card.unread {
-    background: #f8f9ff;
+    background: #e3f2fd;
+    border-left-width: 6px;
+    position: relative;
+}
+
+.notification-card.unread::after {
+    content: 'Non lu';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #1976d2;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 600;
 }
 
 .notification-card:hover {
@@ -157,8 +174,8 @@
 }
 
 .btn-mark-read {
-    padding: 10px 15px;
-    background: #28a745;
+    padding: 0;
+    background: #1976d2;
     color: white;
     border: none;
     border-radius: 50%;
@@ -170,10 +187,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 1;
+    visibility: visible;
 }
 
 .btn-mark-read:hover {
-    background: #218838;
+    background: #1565c0;
     transform: scale(1.1);
 }
 
