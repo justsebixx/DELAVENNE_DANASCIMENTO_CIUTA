@@ -44,10 +44,10 @@ INSERT INTO emprunts (id_user, id_livre, date_emprunt, date_retour_prevue, date_
 (3, 20, '2025-12-22', '2026-01-22', NULL);
 
 -- Insertion des notifications
-INSERT INTO notifications (id_emprunt, type, date_envoi) VALUES
-(1, 'RAPPEL', '2026-01-05'),
-(2, 'RAPPEL', '2026-01-10'),
-(3, 'RAPPEL', '2026-01-08'),
-(4, 'RETOUR', '2025-12-28'),
-(5, 'RAPPEL', '2025-12-28'),
-(7, 'RAPPEL', '2026-01-03');
+INSERT INTO notifications (id_emprunt, type, date_envoi, lue) VALUES
+(1, 'RAPPEL', '2026-01-05', false),
+(2, 'RAPPEL', '2026-01-10', false),
+(3, 'RAPPEL', '2026-01-08', false),
+(4, 'RETOUR', '2025-12-28', true),
+(5, 'RAPPEL', '2025-12-28', false),
+(7, 'RAPPEL', '2026-01-03', false);

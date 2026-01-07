@@ -8,6 +8,7 @@ import AddBook from './pages/AddBook';
 import Admin from './pages/Admin';
 import ManageBooks from './pages/ManageBooks';
 import MyBorrows from './pages/MyBorrows';
+import SearchBooks from './pages/SearchBooks';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
 import Contact from './pages/Contact';
