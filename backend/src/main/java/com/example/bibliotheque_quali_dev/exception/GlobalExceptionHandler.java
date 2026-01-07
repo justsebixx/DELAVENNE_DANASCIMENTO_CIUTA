@@ -74,6 +74,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGlobalException(
             Exception ex, WebRequest request) {
+        // Log l'exception complète pour le debug
+        System.err.println("=== EXCEPTION NON GÉRÉE ===");
+        System.err.println("Type: " + ex.getClass().getName());
+        System.err.println("Message: " + ex.getMessage());
+        ex.printStackTrace();
+        System.err.println("=========================");
+        
         return buildErrorResponse("Une erreur interne s'est produite", 
                 HttpStatus.INTERNAL_SERVER_ERROR, request);
     }

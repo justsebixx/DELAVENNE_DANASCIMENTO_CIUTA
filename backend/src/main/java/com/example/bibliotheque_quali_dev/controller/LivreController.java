@@ -13,7 +13,7 @@ import java.util.List;
  * Contrôleur REST pour la gestion des livres.
  */
 @RestController
-@RequestMapping("/api/livres")
+@RequestMapping("/livres")
 @CrossOrigin(origins = "*")
 public class LivreController {
 

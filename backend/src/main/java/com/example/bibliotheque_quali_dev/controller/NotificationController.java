@@ -13,7 +13,7 @@ import java.util.Map;
  * Contrôleur REST pour la gestion des notifications.
  */
 @RestController
-@RequestMapping("/api/notifications")
+@RequestMapping("/notifications")
 public class NotificationController {
 
     @Autowired
