@@ -23,6 +23,11 @@ lerna-debug.log*
 **/target/
 **/build/
 
+# Maven (wrapper)
+**/.mvn/
+**/mvnw
+**/mvnw.cmd
+
 # Java
 *.class
 
