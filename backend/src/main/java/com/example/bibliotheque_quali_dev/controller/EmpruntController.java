@@ -14,7 +14,7 @@ import java.util.List;
  * Contrôleur REST pour la gestion des emprunts.
  */
 @RestController
-@RequestMapping("/api/emprunts")
+@RequestMapping("/emprunts")
 @CrossOrigin(origins = "*")
 public class EmpruntController {
 
