@@ -8,6 +8,7 @@ import Admin from './pages/Admin';
 import ManageBooks from './pages/ManageBooks';
 import MyBorrows from './pages/MyBorrows';
 import SearchBooks from './pages/SearchBooks';
+import Statistics from './pages/Statistics';
 import Notifications from './pages/Notifications';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
@@ -38,8 +39,13 @@ function App() {
               </ProtectedRoute>
             } />
             <Route path="/manage-books" element={
-              <ProtectedRoute requiredRole="ADMIN">
+              <ProtectedRoute allowedRoles={["ADMIN", "BIBLIOTHECAIRE"]}>
                 <ManageBooks />
+              </ProtectedRoute>
+            } />
+            <Route path="/statistics" element={
+              <ProtectedRoute allowedRoles={["ADMIN", "BIBLIOTHECAIRE"]}>
+                <Statistics />
               </ProtectedRoute>
             } />
             <Route path="/about" element={<About />} />

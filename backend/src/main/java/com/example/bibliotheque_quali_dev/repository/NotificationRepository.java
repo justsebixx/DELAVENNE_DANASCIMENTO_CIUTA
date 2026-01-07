@@ -40,4 +40,14 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
      */
     @Query("SELECT COUNT(n) FROM Notification n JOIN Emprunt e ON n.idEmprunt = e.idEmprunt WHERE e.idUser = :userId AND n.lue = false")
     Long countUnreadByUserId(@Param("userId") Integer userId);
+
+    /**
+     * Supprime toutes les notifications liées à un emprunt.
+     */
+    void deleteByIdEmprunt(Integer idEmprunt);
+
+    /**
+     * Récupère toutes les notifications d'un emprunt.
+     */
+    List<Notification> findByIdEmprunt(Integer idEmprunt);
 }

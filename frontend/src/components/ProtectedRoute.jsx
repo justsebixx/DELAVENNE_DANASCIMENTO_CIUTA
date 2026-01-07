@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ children, requiredRole }) => {
+const ProtectedRoute = ({ children, requiredRole, allowedRoles }) => {
   const token = localStorage.getItem('token');
   const role = localStorage.getItem('role');
 
@@ -9,7 +9,13 @@ const ProtectedRoute = ({ children, requiredRole }) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (requiredRole && role !== requiredRole) {
+  // Support pour plusieurs rôles autorisés
+  if (allowedRoles && allowedRoles.length > 0) {
+    if (!allowedRoles.includes(role)) {
+      return <Navigate to="/" replace />;
+    }
+  } else if (requiredRole && role !== requiredRole) {
+    // Rétrocompatibilité avec requiredRole unique
     return <Navigate to="/" replace />;
   }
 

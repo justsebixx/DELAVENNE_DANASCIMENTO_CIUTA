@@ -1,7 +1,10 @@
 package com.example.bibliotheque_quali_dev.service;
 
+import com.example.bibliotheque_quali_dev.entity.Emprunt;
 import com.example.bibliotheque_quali_dev.entity.Livre;
+import com.example.bibliotheque_quali_dev.repository.EmpruntRepository;
 import com.example.bibliotheque_quali_dev.repository.LivreRepository;
+import com.example.bibliotheque_quali_dev.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +21,12 @@ public class LivreService {
 
     @Autowired
     private LivreRepository livreRepository;
+
+    @Autowired
+    private EmpruntRepository empruntRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     /**
      * Récupère tous les livres.
@@ -67,12 +76,25 @@ public class LivreService {
     }
 
     /**
-     * Supprime un livre.
+     * Supprime un livre et toutes ses dépendances (notifications et emprunts).
      */
     public void delete(Integer id) {
         if (!livreRepository.existsById(id)) {
             throw new RuntimeException("Livre non trouvé avec l'ID: " + id);
         }
+        
+        // Récupérer tous les emprunts liés à ce livre
+        List<Emprunt> emprunts = empruntRepository.findByIdLivre(id);
+        
+        // Supprimer toutes les notifications liées aux emprunts de ce livre
+        for (Emprunt emprunt : emprunts) {
+            notificationRepository.deleteByIdEmprunt(emprunt.getIdEmprunt());
+        }
+        
+        // Supprimer tous les emprunts liés à ce livre
+        empruntRepository.deleteByIdLivre(id);
+        
+        // Supprimer le livre
         livreRepository.deleteById(id);
     }
 

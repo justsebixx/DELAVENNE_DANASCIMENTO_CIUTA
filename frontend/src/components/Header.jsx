@@ -9,6 +9,10 @@ function Header() {
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
 
+    const isAdmin = role === 'ADMIN';
+    const isBibliothecaire = role === 'BIBLIOTHECAIRE';
+    const isStaff = isAdmin || isBibliothecaire;
+
     useEffect(() => {
         function handleClickOutside(event) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -35,6 +39,8 @@ function Header() {
                 <Link to="/" className="nav-link">Accueil</Link>
                 <Link to="/search-books" className="nav-link">Livres</Link>
                 {isLoggedIn && <Link to="/my-borrows" className="nav-link">Mes Emprunts</Link>}
+                {isStaff && <Link to="/manage-books" className="nav-link">Gestion Livres</Link>}
+                {isStaff && <Link to="/statistics" className="nav-link">Statistiques</Link>}
             </nav>
             <div className="nav-right">
                 {isLoggedIn && <NotificationBadge />}
@@ -56,11 +62,22 @@ function Header() {
 
                     {showDropdown && isLoggedIn && (
                         <div className="user-dropdown">
-                            {role === 'ADMIN' ? (
+                            {isAdmin && (
                                 <Link to="/admin" className="dropdown-item" onClick={() => setShowDropdown(false)}>
                                     Administration
                                 </Link>
-                            ) : (
+                            )}
+                            {isStaff && (
+                                <>
+                                    <Link to="/manage-books" className="dropdown-item" onClick={() => setShowDropdown(false)}>
+                                        Gestion des Livres
+                                    </Link>
+                                    <Link to="/statistics" className="dropdown-item" onClick={() => setShowDropdown(false)}>
+                                        Statistiques
+                                    </Link>
+                                </>
+                            )}
+                            {!isStaff && (
                                 <Link to="/my-borrows" className="dropdown-item" onClick={() => setShowDropdown(false)}>
                                     Mes Emprunts
                                 </Link>

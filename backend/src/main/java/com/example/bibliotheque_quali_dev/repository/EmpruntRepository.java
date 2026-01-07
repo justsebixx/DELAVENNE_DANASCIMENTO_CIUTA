@@ -36,5 +36,15 @@ public interface EmpruntRepository extends JpaRepository<Emprunt, Integer> {
      * Récupère les emprunts actifs d'un utilisateur (non retournés).
      */
     List<Emprunt> findByIdUserAndDateRetourEffectiveIsNull(Integer idUser);
+
+    /**
+     * Récupère tous les emprunts d'un livre.
+     */
+    List<Emprunt> findByIdLivre(Integer idLivre);
+
+    /**
+     * Supprime tous les emprunts d'un livre.
+     */
+    void deleteByIdLivre(Integer idLivre);
 }
 
