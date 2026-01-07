@@ -1,0 +1,220 @@
+.my-borrows-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.my-borrows-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+}
+
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    border: 1px solid #f5c6cb;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2em;
+    color: #666;
+}
+
+.no-borrows {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.no-borrows p {
+    font-size: 1.3em;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.btn-search-books {
+    padding: 15px 30px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-search-books:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,123,255,0.3);
+}
+
+.borrows-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+}
+
+.borrow-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    border-left: 5px solid;
+}
+
+.borrow-card.ok {
+    border-left-color: #28a745;
+}
+
+.borrow-card.warning {
+    border-left-color: #ffc107;
+}
+
+.borrow-card.overdue {
+    border-left-color: #dc3545;
+}
+
+.borrow-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.borrow-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.borrow-header h3 {
+    color: #333;
+    margin: 0;
+    font-size: 1.3em;
+    flex: 1;
+    margin-right: 10px;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-badge.ok {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge.warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.overdue {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.borrow-details {
+    flex: 1;
+    margin-bottom: 15px;
+}
+
+.borrow-details p {
+    margin: 8px 0;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.borrow-details strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.borrow-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-extend,
+.btn-return {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-extend {
+    background: #17a2b8;
+    color: white;
+}
+
+.btn-extend:hover {
+    background: #138496;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(23,162,184,0.3);
+}
+
+.btn-return {
+    background: #28a745;
+    color: white;
+}
+
+.btn-return:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(40,167,69,0.3);
+}
+
+.overdue-warning {
+    background: #fff3cd;
+    color: #856404;
+    padding: 12px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid #ffeaa7;
+}
+
+@media (max-width: 768px) {
+    .borrows-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .borrow-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .status-badge {
+        align-self: flex-start;
+    }
+
+    .borrow-actions {
+        flex-direction: column;
+    }
+}

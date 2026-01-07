@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import Books from './pages/Books';
 import AddBook from './pages/AddBook';
 import Admin from './pages/Admin';
-import SearchBooks from './pages/SearchBooks';
+import MyBorrows from './pages/MyBorrows';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -27,6 +27,7 @@ function App() {
           <Route path="/books" element={<Books />} />
           <Route path="/search-books" element={<SearchBooks />} />
           <Route path="/add-book" element={<AddBook />} />
+          <Route path="/my-borrows" element={<MyBorrows />} />
           <Route path="/admin" element={
             <ProtectedRoute requiredRole="ADMIN">
               <Admin />
