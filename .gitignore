@@ -8,18 +8,23 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Node
-node_modules
-dist
-dist-ssr
+**/node_modules/
+**/dist/
+**/dist-ssr/
+**/.vite/
 *.local
+
+# Env files
+.env
+.env.*
+!.env.example
 
 # Maven / Java build outputs
 **/target/
 **/build/
-**/.mvn/wrapper/maven-wrapper.jar
-**/.mvn/wrapper/maven-wrapper.properties
-**/mvnw
-**/mvnw.cmd
+
+# Java
+*.class
 
 # IntelliJ / IDE files
 .idea/
@@ -45,3 +50,5 @@ bin/
 
 # OS
 .DS_Store
+Thumbs.db
+Desktop.ini

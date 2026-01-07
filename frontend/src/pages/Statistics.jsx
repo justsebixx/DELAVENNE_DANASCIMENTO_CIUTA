@@ -3,6 +3,7 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
+  RadialLinearScale,
   Title,
   Tooltip,
   Legend,
@@ -16,6 +17,7 @@ import { api } from '../services/apiService';
 ChartJS.register(
   CategoryScale,
   LinearScale,
+  RadialLinearScale,
   Title,
   Tooltip,
   Legend,
@@ -255,11 +257,11 @@ const Statistics = () => {
         <h2>📉 Visualisations</h2>
         <div className="charts-grid">
           <div className="chart-container">
-            <Doughnut data={doughnutChartData} options={doughnutOptions} />
+            <Doughnut data={doughnutChartData} options={doughnutOptions} redraw />
           </div>
 
           <div className="chart-container">
-            <PolarArea data={polarChartData} options={polarOptions} />
+            <PolarArea data={polarChartData} options={polarOptions} redraw />
           </div>
         </div>
       </section>

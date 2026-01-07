@@ -46,7 +46,12 @@ function SearchBooks() {
             const data = await api.get(endpoint);
             setBooks(data);
         } catch (err) {
-            setError(getErrorMessage(err));
+            const token = localStorage.getItem('token');
+            if (!token && (err?.status === 401 || err?.status === 403)) {
+                setError('Veuillez vous connecter pour avoir accès à la liste des livres.');
+            } else {
+                setError(getErrorMessage(err));
+            }
             console.error(err);
         } finally {
             setLoading(false);

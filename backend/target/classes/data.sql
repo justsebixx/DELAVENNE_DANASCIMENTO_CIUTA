@@ -1,12 +1,11 @@
--- Insertion des utilisateurs
--- Mot de passe pour tous: "password123" (hashé avec BCrypt)
+-- Insertion des utilisateurs (mot de passe : password123, haché avec BCrypt)
 INSERT INTO utilisateurs (nom, prenom, email, passwordhash, role) VALUES
-('Dupont', 'Jean', 'admin@email.com', '$2a$10$YqZ9X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.', 'ADMIN'),
-('Martin', 'Sophie', 'sophie.martin@email.com', '$2a$10$YqZ9X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.', 'ETUDIANT'),
-('Bernard', 'Luc', 'luc.bernard@email.com', '$2a$10$YqZ9X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.', 'ETUDIANT'),
-('Dubois', 'Marie', 'marie.dubois@email.com', '$2a$10$YqZ9X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.', 'ENSEIGNANT'),
-('Thomas', 'Pierre', 'pierre.thomas@email.com', '$2a$10$YqZ9X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.', 'ENSEIGNANT'),
-('Petit', 'Claire', 'bibliothecaire@email.com', '$2a$10$YqZ9X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.xFJ5K5Qq3qOqZ3X1EZmN.', 'BIBLIOTHECAIRE');
+('Dupont', 'Jean', 'admin@email.com', '$2a$10$BlI1GDBNuJlV3IHhp1HIzecS.UxcEh1VaWiQi19rV0G0iwiCxNbHK', 'ADMIN'),
+('Martin', 'Sophie', 'sophie.martin@email.com', '$2a$10$BlI1GDBNuJlV3IHhp1HIzecS.UxcEh1VaWiQi19rV0G0iwiCxNbHK', 'ETUDIANT'),
+('Bernard', 'Luc', 'luc.bernard@email.com', '$2a$10$BlI1GDBNuJlV3IHhp1HIzecS.UxcEh1VaWiQi19rV0G0iwiCxNbHK', 'ETUDIANT'),
+('Dubois', 'Marie', 'marie.dubois@email.com', '$2a$10$BlI1GDBNuJlV3IHhp1HIzecS.UxcEh1VaWiQi19rV0G0iwiCxNbHK', 'ENSEIGNANT'),
+('Thomas', 'Pierre', 'pierre.thomas@email.com', '$2a$10$BlI1GDBNuJlV3IHhp1HIzecS.UxcEh1VaWiQi19rV0G0iwiCxNbHK', 'ENSEIGNANT'),
+('Petit', 'Claire', 'bibliothecaire@email.com', '$2a$10$BlI1GDBNuJlV3IHhp1HIzecS.UxcEh1VaWiQi19rV0G0iwiCxNbHK', 'BIBLIOTHECAIRE');
 
 -- Insertion des livres
 INSERT INTO livres (titre, auteur, isbn, categorie, annee, nb_exemplaires, nb_disponibles) VALUES
@@ -45,10 +44,10 @@ INSERT INTO emprunts (id_user, id_livre, date_emprunt, date_retour_prevue, date_
 (3, 20, '2025-12-22', '2026-01-22', NULL);
 
 -- Insertion des notifications
-INSERT INTO notifications (id_emprunt, type, date_envoi) VALUES
-(1, 'RAPPEL', '2026-01-05'),
-(2, 'RAPPEL', '2026-01-10'),
-(3, 'RAPPEL', '2026-01-08'),
-(4, 'RETOUR', '2025-12-28'),
-(5, 'RAPPEL', '2025-12-28'),
-(7, 'RAPPEL', '2026-01-03');
+INSERT INTO notifications (id_emprunt, type, date_envoi, lue) VALUES
+(1, 'RAPPEL', '2026-01-05', false),
+(2, 'RAPPEL', '2026-01-10', false),
+(3, 'RAPPEL', '2026-01-08', false),
+(4, 'RETOUR', '2025-12-28', true),
+(5, 'RAPPEL', '2025-12-28', false),
+(7, 'RAPPEL', '2026-01-03', false);
