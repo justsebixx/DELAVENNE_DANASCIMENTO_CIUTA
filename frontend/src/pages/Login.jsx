@@ -27,6 +27,32 @@ function Login() {
     setError('');
     setLoading(true);
 
+    // Validation côté client
+    if (!isLogin) {
+      if (formData.nom.trim().length < 2) {
+        setError('Le nom doit contenir au moins 2 caractères');
+        setLoading(false);
+        return;
+      }
+      if (formData.prenom.trim().length < 2) {
+        setError('Le prénom doit contenir au moins 2 caractères');
+        setLoading(false);
+        return;
+      }
+    }
+
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      setError('Veuillez entrer une adresse email valide');
+      setLoading(false);
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setError('Le mot de passe doit contenir au moins 6 caractères');
+      setLoading(false);
+      return;
+    }
+
     try {
       const endpoint = isLogin ? '/auth/login' : '/auth/register';
       const body = isLogin
@@ -71,7 +97,7 @@ function Login() {
         alert('Inscription réussie ! Vous pouvez maintenant vous connecter.');
       }
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Erreur de connexion au serveur');
     } finally {
       setLoading(false);
     }
