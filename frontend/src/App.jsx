@@ -55,6 +55,37 @@ function App() {
         <Footer />
       </Router>
     </ErrorBoundary>
+    <Router>
+      <ScrollToTop />
+      <Header />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/books" element={<Books />} />
+          <Route path="/search-books" element={<SearchBooks />} />
+          <Route path="/add-book" element={<AddBook />} />
+          <Route path="/my-borrows" element={<MyBorrows />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/admin" element={
+            <ProtectedRoute requiredRole="ADMIN">
+              <Admin />
+            </ProtectedRoute>
+          } />
+          <Route path="/manage-books" element={
+            <ProtectedRoute requiredRole="ADMIN">
+              <ManageBooks />
+            </ProtectedRoute>
+          } />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/legal" element={<LegalNotice />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
+    </Router>
   );
 }
 
