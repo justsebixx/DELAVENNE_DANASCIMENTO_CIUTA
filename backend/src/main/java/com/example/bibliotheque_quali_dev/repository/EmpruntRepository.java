@@ -36,10 +36,5 @@ public interface EmpruntRepository extends JpaRepository<Emprunt, Integer> {
      * Récupère les emprunts actifs d'un utilisateur (non retournés).
      */
     List<Emprunt> findByIdUserAndDateRetourEffectiveIsNull(Integer idUser);
-    
-    /**
-     * Vérifie s'il existe une notification pour un emprunt et un type donné.
-     */
-    boolean existsByIdEmpruntAndType(Integer idEmprunt, String type);
 }
 
