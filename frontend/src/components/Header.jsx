@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import NotificationBadge from './NotificationBadge';
 
 function Header() {
     const isLoggedIn = !!localStorage.getItem('token');
@@ -14,6 +15,7 @@ function Header() {
                 <input type="text" className="search-input" placeholder="Rechercher un livre..." />
             </div>
             <div className="nav-right">
+                {isLoggedIn && <NotificationBadge />}
                 <Link to="/login" className="nav-login">
                     <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Login" className="login-icon" />
                 </Link>

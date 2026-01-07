@@ -9,6 +9,7 @@ import Admin from './pages/Admin';
 import ManageBooks from './pages/ManageBooks';
 import MyBorrows from './pages/MyBorrows';
 import SearchBooks from './pages/SearchBooks';
+import Notifications from './pages/Notifications';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -30,6 +31,7 @@ function App() {
           <Route path="/search-books" element={<SearchBooks />} />
           <Route path="/add-book" element={<AddBook />} />
           <Route path="/my-borrows" element={<MyBorrows />} />
+          <Route path="/notifications" element={<Notifications />} />
           <Route path="/admin" element={
             <ProtectedRoute requiredRole="ADMIN">
               <Admin />
