@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/ProtectedRoute';
+import ErrorBoundary from './components/ErrorBoundary';
 import Home from './pages/Home';
 import Books from './pages/Books';
 import AddBook from './pages/AddBook';
@@ -9,6 +10,7 @@ import Admin from './pages/Admin';
 import ManageBooks from './pages/ManageBooks';
 import MyBorrows from './pages/MyBorrows';
 import SearchBooks from './pages/SearchBooks';
+import Notifications from './pages/Notifications';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -20,6 +22,39 @@ import Footer from './components/Footer';
 
 function App() {
   return (
+    <ErrorBoundary>
+      <Router>
+        <ScrollToTop />
+        <Header />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/books" element={<Books />} />
+            <Route path="/search-books" element={<SearchBooks />} />
+            <Route path="/add-book" element={<AddBook />} />
+            <Route path="/my-borrows" element={<MyBorrows />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/admin" element={
+              <ProtectedRoute requiredRole="ADMIN">
+                <Admin />
+              </ProtectedRoute>
+            } />
+            <Route path="/manage-books" element={
+              <ProtectedRoute requiredRole="ADMIN">
+                <ManageBooks />
+              </ProtectedRoute>
+            } />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/legal" element={<LegalNotice />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <Footer />
+      </Router>
+    </ErrorBoundary>
     <Router>
       <ScrollToTop />
       <Header />
@@ -30,6 +65,7 @@ function App() {
           <Route path="/search-books" element={<SearchBooks />} />
           <Route path="/add-book" element={<AddBook />} />
           <Route path="/my-borrows" element={<MyBorrows />} />
+          <Route path="/notifications" element={<Notifications />} />
           <Route path="/admin" element={
             <ProtectedRoute requiredRole="ADMIN">
               <Admin />

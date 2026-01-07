@@ -12,7 +12,10 @@ public class Utilisateur {
     private String prenom;
     private String email;
     private String passwordhash;
-    private String role;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
 
     public Utilisateur(Integer idUser, String nom, String prenom, String email, String passwordhash) {
@@ -67,11 +70,11 @@ public class Utilisateur {
         this.passwordhash = passwordhash;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 }

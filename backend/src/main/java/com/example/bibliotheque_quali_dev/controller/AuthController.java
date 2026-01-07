@@ -3,21 +3,13 @@ package com.example.bibliotheque_quali_dev.controller;
 import com.example.bibliotheque_quali_dev.dto.LoginRequest;
 import com.example.bibliotheque_quali_dev.dto.LoginResponse;
 import com.example.bibliotheque_quali_dev.dto.RegisterRequest;
-import com.example.bibliotheque_quali_dev.entity.SessionToken;
-import com.example.bibliotheque_quali_dev.entity.Utilisateur;
-import com.example.bibliotheque_quali_dev.repository.SessionTokenRepository;
-import com.example.bibliotheque_quali_dev.repository.UtilisateurRepository;
-import com.example.bibliotheque_quali_dev.service.TokenGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import com.example.bibliotheque_quali_dev.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-
+/**
+ * Contrôleur gérant l'authentification et l'inscription des utilisateurs.
+ */
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = "*")
