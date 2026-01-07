@@ -81,10 +81,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         Utilisateur user = utilisateurRepository.findById(token.getIdUser())
                 .orElseThrow(() -> new UnauthorizedException("Utilisateur introuvable pour ce token"));
 
-        String role = user.getRole();
-        if (role == null || role.isBlank()) {
-            role = "ETUDIANT";
-        }
+        String role = user.getRole() != null ? user.getRole().name() : "ETUDIANT";
         return new AuthPrincipal(user.getIdUser(), role);
     }
 }
