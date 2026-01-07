@@ -1,0 +1,125 @@
+.notification-badge-container {
+    position: relative;
+}
+
+.notification-button {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    position: relative;
+    padding: 8px;
+    transition: transform 0.2s;
+}
+
+.notification-button:hover {
+    transform: scale(1.1);
+}
+
+.badge-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.7em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.notification-dropdown {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 350px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    z-index: 1000;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.dropdown-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.dropdown-header a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.dropdown-header a:hover {
+    text-decoration: underline;
+}
+
+.dropdown-content {
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.no-notifications {
+    padding: 30px 20px;
+    text-align: center;
+    color: #999;
+}
+
+.notification-item {
+    display: flex;
+    gap: 12px;
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s;
+}
+
+.notification-item:hover {
+    background: #f8f9fa;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notif-icon {
+    font-size: 1.5em;
+}
+
+.notif-content {
+    flex: 1;
+}
+
+.notif-message {
+    margin: 0 0 5px 0;
+    color: #333;
+    font-size: 0.95em;
+}
+
+.notif-date {
+    font-size: 0.85em;
+    color: #999;
+}
+
+@media (max-width: 480px) {
+    .notification-dropdown {
+        width: 300px;
+        right: -10px;
+    }
+}
