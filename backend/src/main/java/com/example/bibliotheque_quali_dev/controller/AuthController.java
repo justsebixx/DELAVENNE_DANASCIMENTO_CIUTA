@@ -12,6 +12,7 @@ import com.example.bibliotheque_quali_dev.service.TokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,6 +22,7 @@ import java.util.Map;
 
 /**
  * Contrôleur gérant l'authentification et l'inscription des utilisateurs.
+ * Utilise BCrypt pour le hachage sécurisé des mots de passe.
  */
 @RestController
 @RequestMapping("/auth")
@@ -36,12 +38,20 @@ public class AuthController {
     @Autowired
     private TokenGenerator tokenGenerator;
 
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    /**
+     * Authentifie un utilisateur avec email et mot de passe.
+     * @param loginRequest contient email et mot de passe
+     * @return LoginResponse avec token et infos utilisateur
+     */
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         Utilisateur utilisateur = utilisateurRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Email ou mot de passe incorrect."));
 
-        if (!utilisateur.getPasswordhash().equals(loginRequest.getPassword())) {
+        // Vérification sécurisée du mot de passe avec BCrypt
+        if (!passwordEncoder.matches(loginRequest.getPassword(), utilisateur.getPasswordhash())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Email ou mot de passe incorrect.");
         }
 
@@ -64,18 +74,24 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Enregistre un nouvel utilisateur.
+     * Le mot de passe est haché avec BCrypt avant stockage.
+     * @param registerRequest contient les informations du nouvel utilisateur
+     * @return Message de confirmation
+     */
     @PostMapping("/register")
     public ResponseEntity<Map<String, String>> register(@RequestBody RegisterRequest registerRequest) {
         if (utilisateurRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cet email est déjà utilisé.");
         }
 
-        // Création du nouvel utilisateur
+        // Création du nouvel utilisateur avec mot de passe haché
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setNom(registerRequest.getNom());
         utilisateur.setPrenom(registerRequest.getPrenom());
         utilisateur.setEmail(registerRequest.getEmail());
-        utilisateur.setPasswordhash(registerRequest.getPassword()); 
+        utilisateur.setPasswordhash(passwordEncoder.encode(registerRequest.getPassword()));
         utilisateur.setRole(Role.ETUDIANT);
         utilisateurRepository.save(utilisateur);
 
