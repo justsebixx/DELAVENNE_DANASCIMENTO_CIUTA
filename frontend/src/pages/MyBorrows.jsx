@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/MyBorrows.css';
+import { apiFetch, getErrorMessage } from '../services/apiService';
 
 function MyBorrows() {
     const [borrows, setBorrows] = useState([]);
@@ -25,16 +26,10 @@ function MyBorrows() {
         setError('');
         
         try {
-            const response = await fetch(`http://localhost:8080/api/emprunts/user/${userId}/actifs`);
-            
-            if (response.ok) {
-                const data = await response.json();
-                setBorrows(data);
-            } else {
-                setError('Erreur lors du chargement de vos emprunts');
-            }
+            const data = await apiFetch(`/emprunts/user/${userId}/actifs`, { method: 'GET' });
+            setBorrows(data);
         } catch (err) {
-            setError('Erreur de connexion au serveur');
+            setError(getErrorMessage(err));
             console.error(err);
         } finally {
             setLoading(false);
@@ -47,19 +42,12 @@ function MyBorrows() {
         }
 
         try {
-            const response = await fetch(`http://localhost:8080/api/emprunts/${empruntId}/retour`, {
-                method: 'PUT'
-            });
-
-            if (response.ok) {
-                alert('Livre retourné avec succès !');
-                const userId = localStorage.getItem('userId');
-                fetchMyBorrows(userId);
-            } else {
-                alert('Erreur lors du retour du livre');
-            }
+            await apiFetch(`/emprunts/${empruntId}/retour`, { method: 'PUT' });
+            alert('Livre retourné avec succès !');
+            const userId = localStorage.getItem('userId');
+            fetchMyBorrows(userId);
         } catch (err) {
-            alert('Erreur de connexion au serveur');
+            alert(getErrorMessage(err));
             console.error(err);
         }
     };
@@ -70,20 +58,12 @@ function MyBorrows() {
         }
 
         try {
-            const response = await fetch(`http://localhost:8080/api/emprunts/${empruntId}/prolonger`, {
-                method: 'PUT'
-            });
-
-            if (response.ok) {
-                alert('Emprunt prolongé de 15 jours !');
-                const userId = localStorage.getItem('userId');
-                fetchMyBorrows(userId);
-            } else {
-                const errorData = await response.json();
-                alert(`Erreur : ${errorData.message || 'Impossible de prolonger'}`);
-            }
+            await apiFetch(`/emprunts/${empruntId}/prolonger`, { method: 'PUT' });
+            alert('Emprunt prolongé de 15 jours !');
+            const userId = localStorage.getItem('userId');
+            fetchMyBorrows(userId);
         } catch (err) {
-            alert('Erreur de connexion au serveur');
+            alert(getErrorMessage(err));
             console.error(err);
         }
     };

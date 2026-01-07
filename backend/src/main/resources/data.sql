@@ -1,11 +1,11 @@
 -- Insertion des utilisateurs (mot de passe : password123, haché avec BCrypt)
 INSERT INTO utilisateurs (nom, prenom, email, passwordhash, role) VALUES
-('Dupont', 'Jean', 'admin@email.com', '$2a$10$N9qo8uLOickgx2ZMRZoMy.MqNqMQmX9LgFJxjP6LrGkEKqHB8xYBy', 'ADMIN'),
-('Martin', 'Sophie', 'sophie.martin@email.com', '$2a$10$N9qo8uLOickgx2ZMRZoMy.MqNqMQmX9LgFJxjP6LrGkEKqHB8xYBy', 'ETUDIANT'),
-('Bernard', 'Luc', 'luc.bernard@email.com', '$2a$10$N9qo8uLOickgx2ZMRZoMy.MqNqMQmX9LgFJxjP6LrGkEKqHB8xYBy', 'ETUDIANT'),
-('Dubois', 'Marie', 'marie.dubois@email.com', '$2a$10$N9qo8uLOickgx2ZMRZoMy.MqNqMQmX9LgFJxjP6LrGkEKqHB8xYBy', 'ENSEIGNANT'),
-('Thomas', 'Pierre', 'pierre.thomas@email.com', '$2a$10$N9qo8uLOickgx2ZMRZoMy.MqNqMQmX9LgFJxjP6LrGkEKqHB8xYBy', 'ENSEIGNANT'),
-('Petit', 'Claire', 'bibliothecaire@email.com', '$2a$10$N9qo8uLOickgx2ZMRZoMy.MqNqMQmX9LgFJxjP6LrGkEKqHB8xYBy', 'BIBLIOTHECAIRE');
+('Dupont', 'Jean', 'admin@email.com', '$2a$10$BlI1GDBNuJlV3IHhp1HIzecS.UxcEh1VaWiQi19rV0G0iwiCxNbHK', 'ADMIN'),
+('Martin', 'Sophie', 'sophie.martin@email.com', '$2a$10$BlI1GDBNuJlV3IHhp1HIzecS.UxcEh1VaWiQi19rV0G0iwiCxNbHK', 'ETUDIANT'),
+('Bernard', 'Luc', 'luc.bernard@email.com', '$2a$10$BlI1GDBNuJlV3IHhp1HIzecS.UxcEh1VaWiQi19rV0G0iwiCxNbHK', 'ETUDIANT'),
+('Dubois', 'Marie', 'marie.dubois@email.com', '$2a$10$BlI1GDBNuJlV3IHhp1HIzecS.UxcEh1VaWiQi19rV0G0iwiCxNbHK', 'ENSEIGNANT'),
+('Thomas', 'Pierre', 'pierre.thomas@email.com', '$2a$10$BlI1GDBNuJlV3IHhp1HIzecS.UxcEh1VaWiQi19rV0G0iwiCxNbHK', 'ENSEIGNANT'),
+('Petit', 'Claire', 'bibliothecaire@email.com', '$2a$10$BlI1GDBNuJlV3IHhp1HIzecS.UxcEh1VaWiQi19rV0G0iwiCxNbHK', 'BIBLIOTHECAIRE');
 
 -- Insertion des livres
 INSERT INTO livres (titre, auteur, isbn, categorie, annee, nb_exemplaires, nb_disponibles) VALUES

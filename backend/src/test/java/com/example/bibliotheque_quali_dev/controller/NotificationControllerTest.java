@@ -1,5 +1,6 @@
 package com.example.bibliotheque_quali_dev.controller;
 
+import com.example.bibliotheque_quali_dev.config.AuthPrincipal;
 import com.example.bibliotheque_quali_dev.entity.Notification;
 import com.example.bibliotheque_quali_dev.service.NotificationService;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletRequest;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -61,7 +63,10 @@ class NotificationControllerTest {
         List<Notification> notifications = Arrays.asList(notification1, notification2, notification3);
         when(notificationService.getNotificationsByUser(100)).thenReturn(notifications);
 
-        ResponseEntity<List<Notification>> response = notificationController.getUserNotifications(100);
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setAttribute("auth.principal", new AuthPrincipal(100, "ETUDIANT"));
+
+        ResponseEntity<List<Notification>> response = notificationController.getUserNotifications(100, request);
 
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
@@ -73,7 +78,10 @@ class NotificationControllerTest {
     void testGetUserNotifications_EmptyList() {
         when(notificationService.getNotificationsByUser(100)).thenReturn(Arrays.asList());
 
-        ResponseEntity<List<Notification>> response = notificationController.getUserNotifications(100);
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setAttribute("auth.principal", new AuthPrincipal(100, "ETUDIANT"));
+
+        ResponseEntity<List<Notification>> response = notificationController.getUserNotifications(100, request);
 
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
@@ -86,7 +94,10 @@ class NotificationControllerTest {
         List<Notification> unreadNotifications = Arrays.asList(notification1, notification2);
         when(notificationService.getUnreadNotifications(100)).thenReturn(unreadNotifications);
 
-        ResponseEntity<List<Notification>> response = notificationController.getUnreadNotifications(100);
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setAttribute("auth.principal", new AuthPrincipal(100, "ETUDIANT"));
+
+        ResponseEntity<List<Notification>> response = notificationController.getUnreadNotifications(100, request);
 
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
@@ -100,7 +111,10 @@ class NotificationControllerTest {
     void testCountUnreadNotifications_Success() {
         when(notificationService.countUnread(100)).thenReturn(2L);
 
-        ResponseEntity<Map<String, Long>> response = notificationController.countUnreadNotifications(100);
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setAttribute("auth.principal", new AuthPrincipal(100, "ETUDIANT"));
+
+        ResponseEntity<Map<String, Long>> response = notificationController.countUnreadNotifications(100, request);
 
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
@@ -112,7 +126,10 @@ class NotificationControllerTest {
     void testCountUnreadNotifications_Zero() {
         when(notificationService.countUnread(100)).thenReturn(0L);
 
-        ResponseEntity<Map<String, Long>> response = notificationController.countUnreadNotifications(100);
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setAttribute("auth.principal", new AuthPrincipal(100, "ETUDIANT"));
+
+        ResponseEntity<Map<String, Long>> response = notificationController.countUnreadNotifications(100, request);
 
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
@@ -152,7 +169,10 @@ class NotificationControllerTest {
         when(notificationService.markAsRead(1)).thenReturn(notification1);
         when(notificationService.markAsRead(2)).thenReturn(notification2);
 
-        ResponseEntity<Map<String, String>> response = notificationController.markAllAsRead(100);
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setAttribute("auth.principal", new AuthPrincipal(100, "ETUDIANT"));
+
+        ResponseEntity<Map<String, String>> response = notificationController.markAllAsRead(100, request);
 
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
@@ -165,7 +185,10 @@ class NotificationControllerTest {
     void testMarkAllAsRead_NoUnreadNotifications() {
         when(notificationService.getUnreadNotifications(100)).thenReturn(Arrays.asList());
 
-        ResponseEntity<Map<String, String>> response = notificationController.markAllAsRead(100);
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setAttribute("auth.principal", new AuthPrincipal(100, "ETUDIANT"));
+
+        ResponseEntity<Map<String, String>> response = notificationController.markAllAsRead(100, request);
 
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());

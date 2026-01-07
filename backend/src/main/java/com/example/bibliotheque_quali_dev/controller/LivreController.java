@@ -1,5 +1,6 @@
 package com.example.bibliotheque_quali_dev.controller;
 
+import com.example.bibliotheque_quali_dev.config.RequireRoles;
 import com.example.bibliotheque_quali_dev.entity.Livre;
 import com.example.bibliotheque_quali_dev.service.LivreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/livres")
-@CrossOrigin(origins = "*")
+@RequireRoles({})
 public class LivreController {
 
     @Autowired
@@ -44,6 +45,7 @@ public class LivreController {
      * Crée un nouveau livre.
      */
     @PostMapping
+    @RequireRoles({"ADMIN", "BIBLIOTHECAIRE"})
     public ResponseEntity<Livre> createLivre(@RequestBody Livre livre) {
         try {
             Livre created = livreService.create(livre);
@@ -57,6 +59,7 @@ public class LivreController {
      * Met à jour un livre existant.
      */
     @PutMapping("/{id}")
+    @RequireRoles({"ADMIN", "BIBLIOTHECAIRE"})
     public ResponseEntity<Livre> updateLivre(@PathVariable Integer id, @RequestBody Livre livre) {
         try {
             Livre updated = livreService.update(id, livre);
@@ -70,6 +73,7 @@ public class LivreController {
      * Supprime un livre.
      */
     @DeleteMapping("/{id}")
+    @RequireRoles({"ADMIN", "BIBLIOTHECAIRE"})
     public ResponseEntity<Void> deleteLivre(@PathVariable Integer id) {
         try {
             livreService.delete(id);

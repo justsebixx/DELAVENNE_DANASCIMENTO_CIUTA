@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Notifications.css';
+import { apiFetch } from '../services/apiService';
 
 function Notifications() {
     const [notifications, setNotifications] = useState([]);
@@ -10,7 +11,8 @@ function Notifications() {
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
-        if (!userId) {
+        const token = localStorage.getItem('token');
+        if (!userId || !token) {
             navigate('/login');
             return;
         }
@@ -20,11 +22,8 @@ function Notifications() {
     const fetchNotifications = async (userId) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api/notifications/user/${userId}`);
-            if (response.ok) {
-                const data = await response.json();
-                setNotifications(data);
-            }
+            const data = await apiFetch(`/notifications/user/${userId}`, { method: 'GET' });
+            setNotifications(data);
         } catch (err) {
             console.error('Erreur chargement notifications:', err);
         } finally {
@@ -34,15 +33,10 @@ function Notifications() {
 
     const markAsRead = async (notifId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/notifications/${notifId}/read`, {
-                method: 'PUT'
-            });
-            
-            if (response.ok) {
-                setNotifications(prev => 
-                    prev.map(n => n.idNotif === notifId ? { ...n, lue: true } : n)
-                );
-            }
+            await apiFetch(`/notifications/${notifId}/read`, { method: 'PUT' });
+            setNotifications(prev => 
+                prev.map(n => n.idNotif === notifId ? { ...n, lue: true } : n)
+            );
         } catch (err) {
             console.error('Erreur marquage comme lu:', err);
         }
@@ -51,13 +45,8 @@ function Notifications() {
     const markAllAsRead = async () => {
         const userId = localStorage.getItem('userId');
         try {
-            const response = await fetch(`http://localhost:8080/api/notifications/user/${userId}/read-all`, {
-                method: 'PUT'
-            });
-            
-            if (response.ok) {
-                setNotifications(prev => prev.map(n => ({ ...n, lue: true })));
-            }
+            await apiFetch(`/notifications/user/${userId}/read-all`, { method: 'PUT' });
+            setNotifications(prev => prev.map(n => ({ ...n, lue: true })));
         } catch (err) {
             console.error('Erreur marquage tout comme lu:', err);
         }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './NotificationBadge.css';
+import { apiFetch } from '../services/apiService';
 
 function NotificationBadge() {
     const [count, setCount] = useState(0);
@@ -9,7 +10,8 @@ function NotificationBadge() {
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
-        if (userId) {
+        const token = localStorage.getItem('token');
+        if (userId && token) {
             fetchUnreadCount(userId);
             fetchRecentNotifications(userId);
             
@@ -25,11 +27,8 @@ function NotificationBadge() {
 
     const fetchUnreadCount = async (userId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/notifications/user/${userId}/count`);
-            if (response.ok) {
-                const data = await response.json();
-                setCount(data.count);
-            }
+            const data = await apiFetch(`/notifications/user/${userId}/count`, { method: 'GET' });
+            setCount(data.count);
         } catch (err) {
             console.error('Erreur chargement compteur:', err);
         }
@@ -37,11 +36,8 @@ function NotificationBadge() {
 
     const fetchRecentNotifications = async (userId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/notifications/user/${userId}/unread`);
-            if (response.ok) {
-                const data = await response.json();
-                setNotifications(data.slice(0, 5)); // 5 dernières
-            }
+            const data = await apiFetch(`/notifications/user/${userId}/unread`, { method: 'GET' });
+            setNotifications(data.slice(0, 5)); // 5 dernières
         } catch (err) {
             console.error('Erreur chargement notifications:', err);
         }
@@ -72,7 +68,7 @@ function NotificationBadge() {
         return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
     };
 
-    if (!localStorage.getItem('userId')) {
+    if (!localStorage.getItem('userId') || !localStorage.getItem('token')) {
         return null;
     }
 

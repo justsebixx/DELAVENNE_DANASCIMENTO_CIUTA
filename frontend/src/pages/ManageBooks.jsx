@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import '../styles/ManageBooks.css';
+import { api, getErrorMessage } from '../services/apiService';
 
 function ManageBooks() {
     const [books, setBooks] = useState([]);
@@ -25,11 +26,8 @@ function ManageBooks() {
     const fetchBooks = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:8080/api/livres');
-            if (response.ok) {
-                const data = await response.json();
-                setBooks(data);
-            }
+            const data = await api.get('/livres');
+            setBooks(data);
         } catch (err) {
             console.error('Erreur lors du chargement des livres:', err);
         } finally {
@@ -98,28 +96,17 @@ function ManageBooks() {
         };
 
         try {
-            const url = editMode 
-                ? `http://localhost:8080/api/livres/${currentBook.idLivre}`
-                : 'http://localhost:8080/api/livres';
-            
-            const response = await fetch(url, {
-                method: editMode ? 'PUT' : 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(bookData)
-            });
-
-            if (response.ok) {
-                fetchBooks();
-                closeModal();
-                alert(editMode ? 'Livre modifié avec succès !' : 'Livre ajouté avec succès !');
+            if (editMode) {
+                await api.put(`/livres/${currentBook.idLivre}`, bookData);
             } else {
-                const errorData = await response.json();
-                setError(errorData.message || 'Erreur lors de l\'enregistrement');
+                await api.post('/livres', bookData);
             }
+
+            fetchBooks();
+            closeModal();
+            alert(editMode ? 'Livre modifié avec succès !' : 'Livre ajouté avec succès !');
         } catch (err) {
-            setError('Erreur de connexion au serveur');
+            setError(getErrorMessage(err));
             console.error(err);
         }
     };
@@ -130,18 +117,11 @@ function ManageBooks() {
         }
 
         try {
-            const response = await fetch(`http://localhost:8080/api/livres/${bookId}`, {
-                method: 'DELETE'
-            });
-
-            if (response.ok) {
-                fetchBooks();
-                alert('Livre supprimé avec succès !');
-            } else {
-                alert('Erreur lors de la suppression');
-            }
+            await api.delete(`/livres/${bookId}`);
+            fetchBooks();
+            alert('Livre supprimé avec succès !');
         } catch (err) {
-            alert('Erreur de connexion au serveur');
+            alert(getErrorMessage(err));
             console.error(err);
         }
     };

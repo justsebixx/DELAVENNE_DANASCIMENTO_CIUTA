@@ -4,7 +4,6 @@ import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/ProtectedRoute';
 import ErrorBoundary from './components/ErrorBoundary';
 import Home from './pages/Home';
-import Admin from './pages/Admin';
 import ManageBooks from './pages/ManageBooks';
 import MyBorrows from './pages/MyBorrows';
 import SearchBooks from './pages/SearchBooks';
@@ -33,11 +32,6 @@ function App() {
             <Route path="/my-borrows" element={<MyBorrows />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/admin" element={
-              <ProtectedRoute requiredRole="ADMIN">
-                <Admin />
-              </ProtectedRoute>
-            } />
             <Route path="/manage-books" element={
               <ProtectedRoute allowedRoles={["ADMIN", "BIBLIOTHECAIRE"]}>
                 <ManageBooks />

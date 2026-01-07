@@ -2,7 +2,13 @@
  * Utilitaire pour gérer les appels API avec gestion d'erreur améliorée
  */
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api').replace(/\/+$/, '');
+
+function normalizeEndpoint(endpoint) {
+  if (!endpoint) return '';
+  if (endpoint.startsWith('http')) return endpoint;
+  return endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+}
 
 /**
  * Gestionnaire d'erreurs API
@@ -20,7 +26,8 @@ export class ApiError extends Error {
  * Wrapper fetch avec gestion d'erreur
  */
 export async function apiFetch(endpoint, options = {}) {
-  const url = endpoint.startsWith('http') ? endpoint : `${API_BASE_URL}${endpoint}`;
+  const normalized = normalizeEndpoint(endpoint);
+  const url = normalized.startsWith('http') ? normalized : `${API_BASE_URL}${normalized}`;
   
   const defaultHeaders = {
     'Content-Type': 'application/json',

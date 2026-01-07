@@ -1,7 +1,10 @@
 package com.example.bibliotheque_quali_dev.service;
 
+import com.example.bibliotheque_quali_dev.entity.Emprunt;
 import com.example.bibliotheque_quali_dev.entity.Livre;
+import com.example.bibliotheque_quali_dev.repository.EmpruntRepository;
 import com.example.bibliotheque_quali_dev.repository.LivreRepository;
+import com.example.bibliotheque_quali_dev.repository.NotificationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -28,6 +31,12 @@ class LivreServiceTest {
 
     @Mock
     private LivreRepository livreRepository;
+
+    @Mock
+    private EmpruntRepository empruntRepository;
+
+    @Mock
+    private NotificationRepository notificationRepository;
 
     @InjectMocks
     private LivreService livreService;
@@ -187,12 +196,19 @@ class LivreServiceTest {
         @DisplayName("Doit supprimer un livre existant")
         void delete_ExistingId_Success() {
             when(livreRepository.existsById(1)).thenReturn(true);
-            doNothing().when(livreRepository).deleteById(1);
+            when(empruntRepository.findByIdLivre(1)).thenReturn(Arrays.asList(
+                    new Emprunt(10, 100, 1, null, null, null),
+                    new Emprunt(11, 101, 1, null, null, null)
+            ));
 
             assertDoesNotThrow(() -> livreService.delete(1));
 
             verify(livreRepository, times(1)).existsById(1);
             verify(livreRepository, times(1)).deleteById(1);
+            verify(empruntRepository, times(1)).findByIdLivre(1);
+            verify(notificationRepository, times(1)).deleteByIdEmprunt(10);
+            verify(notificationRepository, times(1)).deleteByIdEmprunt(11);
+            verify(empruntRepository, times(1)).deleteByIdLivre(1);
         }
 
         @Test
@@ -203,6 +219,7 @@ class LivreServiceTest {
             assertThrows(RuntimeException.class, () -> livreService.delete(999));
 
             verify(livreRepository, never()).deleteById(any());
+            verifyNoInteractions(empruntRepository, notificationRepository);
         }
     }
 

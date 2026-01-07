@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../styles/Profile.css';
+import { api, getErrorMessage, logout } from '../services/apiService';
 
 function Profile() {
-    const navigate = useNavigate();
     const [user, setUser] = useState({
         nom: '',
         prenom: '',
@@ -16,32 +15,21 @@ function Profile() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
-            navigate('/login');
+            logout();
             return;
         }
         fetchProfile();
-    }, [navigate]);
+    }, []);
 
     const fetchProfile = async () => {
         try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:8080/api/utilisateurs/me', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setUser(data);
-            } else {
-                setMessage({ text: 'Impossible de charger le profil', type: 'error' });
-                if (response.status === 401) {
-                    handleLogout();
-                }
-            }
+            const data = await api.get('/utilisateurs/me');
+            setUser(data);
         } catch (err) {
-            setMessage({ text: 'Erreur de connexion', type: 'error' });
+            setMessage({ text: getErrorMessage(err), type: 'error' });
+            if (err?.status === 401) {
+                logout();
+            }
         } finally {
             setLoading(false);
         }
@@ -59,34 +47,16 @@ function Profile() {
         setMessage({ text: '', type: '' });
         
         try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:8080/api/utilisateurs/me', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(user)
-            });
-
-            if (response.ok) {
-                const updatedUser = await response.json();
-                setUser(updatedUser);
-                setMessage({ text: 'Profil mis à jour avec succès', type: 'success' });
-            } else {
-                const errorData = await response.json();
-                setMessage({ text: errorData.message || 'Erreur lors de la mise à jour', type: 'error' });
-            }
+            const updatedUser = await api.put('/utilisateurs/me', user);
+            setUser(updatedUser);
+            setMessage({ text: 'Profil mis à jour avec succès', type: 'success' });
         } catch (err) {
-            setMessage({ text: 'Erreur de connexion', type: 'error' });
+            setMessage({ text: getErrorMessage(err), type: 'error' });
         }
     };
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('role');
-        navigate('/login');
+        logout();
     };
 
     if (loading) return <div className="loading-profile">Chargement...</div>;

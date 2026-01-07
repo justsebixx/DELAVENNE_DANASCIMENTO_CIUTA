@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import '../styles/SearchBooks.css';
+import { api, getErrorMessage } from '../services/apiService';
 
 function SearchBooks() {
     const [books, setBooks] = useState([]);
@@ -20,11 +21,8 @@ function SearchBooks() {
 
     const fetchCategories = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/livres/categories');
-            if (response.ok) {
-                const data = await response.json();
-                setCategories(data);
-            }
+            const data = await api.get('/livres/categories');
+            setCategories(data);
         } catch (err) {
             console.error('Erreur lors du chargement des catégories:', err);
         }
@@ -41,20 +39,14 @@ function SearchBooks() {
             if (filters.categorie) params.append('categorie', filters.categorie);
             if (filters.disponible !== '') params.append('disponible', filters.disponible);
 
-            const url = filters.titre || filters.auteur || filters.categorie || filters.disponible !== '' 
-                ? `http://localhost:8080/api/livres/search?${params.toString()}`
-                : 'http://localhost:8080/api/livres';
+            const endpoint = filters.titre || filters.auteur || filters.categorie || filters.disponible !== '' 
+                ? `/livres/search?${params.toString()}`
+                : '/livres';
 
-            const response = await fetch(url);
-            
-            if (response.ok) {
-                const data = await response.json();
-                setBooks(data);
-            } else {
-                setError('Erreur lors du chargement des livres');
-            }
+            const data = await api.get(endpoint);
+            setBooks(data);
         } catch (err) {
-            setError('Erreur de connexion au serveur');
+            setError(getErrorMessage(err));
             console.error(err);
         } finally {
             setLoading(false);
@@ -94,27 +86,15 @@ function SearchBooks() {
         }
 
         try {
-            const response = await fetch('http://localhost:8080/api/emprunts', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    idLivre: bookId,
-                    idUser: parseInt(userId)
-                })
+            await api.post('/emprunts', {
+                idLivre: bookId,
+                idUser: parseInt(userId)
             });
 
-            if (response.ok) {
-                alert('Livre emprunté avec succès !');
-                fetchBooks(); // Rafraîchir la liste
-            } else {
-                const errorData = await response.json();
-                alert(`Erreur : ${errorData.message || 'Impossible d\'emprunter ce livre'}`);
-            }
+            alert('Livre emprunté avec succès !');
+            fetchBooks(); // Rafraîchir la liste
         } catch (err) {
-            alert('Erreur de connexion au serveur');
+            alert(getErrorMessage(err));
             console.error(err);
         }
     };

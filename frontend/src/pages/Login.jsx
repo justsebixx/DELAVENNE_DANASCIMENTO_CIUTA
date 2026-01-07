@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../styles/Login.css';
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api').replace(/\/+$/, '');
+
 function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
@@ -59,7 +61,7 @@ function Login() {
         ? { email: formData.email, password: formData.password }
         : formData;
 
-      const response = await fetch(`http://localhost:8080/api${endpoint}`, {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -79,12 +81,8 @@ function Login() {
         localStorage.setItem('userId', data.idUser);
         localStorage.setItem('role', data.role);
         
-        // Redirection selon le rôle
-        if (data.role === 'ADMIN') {
-          navigate('/admin');
-        } else {
-          navigate('/');
-        }
+        // Redirection après connexion
+        navigate('/');
       } else {
         // Inscription réussie, basculer vers le formulaire de connexion
         setIsLogin(true);

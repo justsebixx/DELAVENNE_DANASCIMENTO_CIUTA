@@ -1,5 +1,6 @@
 package com.example.bibliotheque_quali_dev.controller;
 
+import com.example.bibliotheque_quali_dev.config.AuthPrincipal;
 import com.example.bibliotheque_quali_dev.dto.EmpruntCreateRequest;
 import com.example.bibliotheque_quali_dev.entity.Emprunt;
 import com.example.bibliotheque_quali_dev.service.EmpruntService;
@@ -13,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletRequest;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -115,7 +117,10 @@ class EmpruntControllerTest {
             when(empruntService.findActiveByUserId(100))
                     .thenReturn(Arrays.asList(emprunt1, emprunt2));
 
-            ResponseEntity<List<Emprunt>> response = empruntController.getActiveEmpruntsByUser(100);
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setAttribute("auth.principal", new AuthPrincipal(100, "ETUDIANT"));
+
+            ResponseEntity<List<Emprunt>> response = empruntController.getActiveEmpruntsByUser(100, request);
 
             assertEquals(HttpStatus.OK, response.getStatusCode());
             assertEquals(2, response.getBody().size());
@@ -132,7 +137,10 @@ class EmpruntControllerTest {
             when(empruntService.findHistoryByUserId(100))
                     .thenReturn(Arrays.asList(emprunt1, emprunt2));
 
-            ResponseEntity<List<Emprunt>> response = empruntController.getEmpruntHistoryByUser(100);
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setAttribute("auth.principal", new AuthPrincipal(100, "ETUDIANT"));
+
+            ResponseEntity<List<Emprunt>> response = empruntController.getEmpruntHistoryByUser(100, request);
 
             assertEquals(HttpStatus.OK, response.getStatusCode());
             assertEquals(2, response.getBody().size());
@@ -165,7 +173,10 @@ class EmpruntControllerTest {
         void createEmprunt_ValidRequest_ReturnsCreated() {
             when(empruntService.create(any(EmpruntCreateRequest.class))).thenReturn(emprunt1);
 
-            ResponseEntity<?> response = empruntController.createEmprunt(createRequest);
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setAttribute("auth.principal", new AuthPrincipal(100, "ETUDIANT"));
+
+            ResponseEntity<?> response = empruntController.createEmprunt(createRequest, request);
 
             assertEquals(HttpStatus.CREATED, response.getStatusCode());
         }
@@ -176,7 +187,10 @@ class EmpruntControllerTest {
             when(empruntService.create(any(EmpruntCreateRequest.class)))
                     .thenThrow(new RuntimeException("Limite d'emprunts atteinte"));
 
-            ResponseEntity<?> response = empruntController.createEmprunt(createRequest);
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setAttribute("auth.principal", new AuthPrincipal(100, "ETUDIANT"));
+
+            ResponseEntity<?> response = empruntController.createEmprunt(createRequest, request);
 
             assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
             assertTrue(response.getBody().toString().contains("Limite"));
@@ -188,7 +202,10 @@ class EmpruntControllerTest {
             when(empruntService.create(any(EmpruntCreateRequest.class)))
                     .thenThrow(new RuntimeException("Livre non disponible"));
 
-            ResponseEntity<?> response = empruntController.createEmprunt(createRequest);
+            MockHttpServletRequest request = new MockHttpServletRequest();
+            request.setAttribute("auth.principal", new AuthPrincipal(100, "ETUDIANT"));
+
+            ResponseEntity<?> response = empruntController.createEmprunt(createRequest, request);
 
             assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         }

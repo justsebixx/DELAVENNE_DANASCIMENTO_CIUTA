@@ -10,6 +10,7 @@ import {
 } from 'chart.js';
 import { Doughnut, PolarArea } from 'react-chartjs-2';
 import './Statistics.css';
+import { api } from '../services/apiService';
 
 // Enregistrement des composants Chart.js...
 ChartJS.register(
@@ -42,19 +43,16 @@ const Statistics = () => {
 
   const fetchDashboardStats = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/dashboard/stats');
-      if (response.ok) {
-        const data = await response.json();
-        setStats({
-          totalLivres: data.totalLivres,
-          livresDisponibles: data.livresDisponibles,
-          livresEmpruntes: data.livresEmpruntes,
-          totalUtilisateurs: data.totalUtilisateurs,
-          empruntsEnCours: data.empruntsEnCours,
-          empruntsEnRetard: data.empruntsEnRetard,
-        });
-        setTopLivres(data.topLivres || []);
-      }
+      const data = await api.get('/dashboard/stats');
+      setStats({
+        totalLivres: data.totalLivres,
+        livresDisponibles: data.livresDisponibles,
+        livresEmpruntes: data.livresEmpruntes,
+        totalUtilisateurs: data.totalUtilisateurs,
+        empruntsEnCours: data.empruntsEnCours,
+        empruntsEnRetard: data.empruntsEnRetard,
+      });
+      setTopLivres(data.topLivres || []);
     } catch (error) {
       console.error('Erreur lors du chargement des statistiques:', error);
     } finally {

@@ -65,7 +65,7 @@ public class AuthService {
         SessionToken token = new SessionToken();
         token.setToken(tokenValue);
         token.setIdUser(user.getIdUser());
-        token.setExpiresAt(LocalDateTime.now().plusDays(30)); // Token valide 30 jours
+        token.setExpiresAt(LocalDateTime.now().plusHours(24));
         sessionTokenRepository.save(token);
         
         // Créer la réponse
@@ -121,7 +121,7 @@ public class AuthService {
         SessionToken token = new SessionToken();
         token.setToken(tokenValue);
         token.setIdUser(user.getIdUser());
-        token.setExpiresAt(LocalDateTime.now().plusDays(30));
+        token.setExpiresAt(LocalDateTime.now().plusHours(24));
         sessionTokenRepository.save(token);
         
         // Créer la réponse

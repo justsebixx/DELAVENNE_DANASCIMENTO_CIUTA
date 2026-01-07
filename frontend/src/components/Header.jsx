@@ -78,11 +78,6 @@ function Header() {
 
                     {showDropdown && isLoggedIn && (
                         <div className="user-dropdown">
-                            {isAdmin && (
-                                <Link to="/admin" className="dropdown-item" onClick={() => setShowDropdown(false)}>
-                                    Administration
-                                </Link>
-                            )}
                             {isStaff && (
                                 <>
                                     <Link to="/manage-books" className="dropdown-item" onClick={() => setShowDropdown(false)}>

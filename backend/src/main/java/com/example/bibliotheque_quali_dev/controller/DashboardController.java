@@ -1,5 +1,6 @@
 package com.example.bibliotheque_quali_dev.controller;
 
+import com.example.bibliotheque_quali_dev.config.RequireRoles;
 import com.example.bibliotheque_quali_dev.dto.DashboardResponse;
 import com.example.bibliotheque_quali_dev.dto.TopLivreStat;
 import com.example.bibliotheque_quali_dev.repository.EmpruntRepository;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/dashboard")
-@CrossOrigin(origins = "*")
+@RequireRoles({"ADMIN", "BIBLIOTHECAIRE"})
 public class DashboardController {
 
     @Autowired

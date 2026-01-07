@@ -6,6 +6,8 @@ import com.example.bibliotheque_quali_dev.exception.ForbiddenException;
 import com.example.bibliotheque_quali_dev.exception.UnauthorizedException;
 import com.example.bibliotheque_quali_dev.repository.SessionTokenRepository;
 import com.example.bibliotheque_quali_dev.repository.UtilisateurRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -59,6 +61,11 @@ public class AuthInterceptor implements HandlerInterceptor {
     }
 
     private AuthPrincipal authenticate(HttpServletRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof AuthPrincipal principal) {
+            return principal;
+        }
+
         String auth = request.getHeader("Authorization");
         if (auth == null || auth.isBlank() || !auth.startsWith("Bearer ")) {
             throw new UnauthorizedException("Token manquant");
