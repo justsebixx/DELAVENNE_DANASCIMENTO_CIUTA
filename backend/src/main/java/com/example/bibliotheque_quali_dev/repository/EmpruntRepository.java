@@ -16,7 +16,7 @@ public interface EmpruntRepository extends JpaRepository<Emprunt, Integer> {
     
     int countByDateRetourPrevueBeforeAndDateRetourEffectiveIsNull(LocalDate date);
     
-    @Query("SELECT new com.example.bibliotheque_quali_dev.dto.TopLivreStat(l.titre, COUNT(e)) " +
+    @Query("SELECT new com.example.bibliotheque_quali_dev.dto.TopLivreStat(l.idLivre, l.titre, COUNT(e)) " +
            "FROM Emprunt e JOIN e.livre l " +
            "GROUP BY l.idLivre, l.titre " +
            "ORDER BY COUNT(e) DESC")

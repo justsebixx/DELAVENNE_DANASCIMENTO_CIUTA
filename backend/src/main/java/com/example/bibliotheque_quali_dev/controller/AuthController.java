@@ -3,9 +3,21 @@ package com.example.bibliotheque_quali_dev.controller;
 import com.example.bibliotheque_quali_dev.dto.LoginRequest;
 import com.example.bibliotheque_quali_dev.dto.LoginResponse;
 import com.example.bibliotheque_quali_dev.dto.RegisterRequest;
-import com.example.bibliotheque_quali_dev.service.AuthService;
+import com.example.bibliotheque_quali_dev.entity.Utilisateur;
+import com.example.bibliotheque_quali_dev.entity.SessionToken;
+import com.example.bibliotheque_quali_dev.entity.Role;
+import com.example.bibliotheque_quali_dev.repository.UtilisateurRepository;
+import com.example.bibliotheque_quali_dev.repository.SessionTokenRepository;
+import com.example.bibliotheque_quali_dev.service.TokenGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Contrôleur gérant l'authentification et l'inscription des utilisateurs.
@@ -34,7 +46,7 @@ public class AuthController {
         }
 
         // Génération d'un token de session
-        String token = tokenGenerator.newToken();
+        String token = tokenGenerator.generateToken();
         SessionToken sessionToken = new SessionToken();
         sessionToken.setToken(token);
         sessionToken.setIdUser(utilisateur.getIdUser());
@@ -42,7 +54,13 @@ public class AuthController {
         sessionTokenRepository.save(sessionToken);
 
         // Retour de la réponse avec le token et les informations de l'utilisateur
-        LoginResponse response = new LoginResponse(token, utilisateur.getIdUser(), utilisateur.getRole());
+        LoginResponse response = new LoginResponse();
+        response.setToken(token);
+        response.setIdUser(utilisateur.getIdUser());
+        response.setNom(utilisateur.getNom());
+        response.setPrenom(utilisateur.getPrenom());
+        response.setEmail(utilisateur.getEmail());
+        response.setRole(utilisateur.getRole().name());
         return ResponseEntity.ok(response);
     }
 
@@ -58,7 +76,7 @@ public class AuthController {
         utilisateur.setPrenom(registerRequest.getPrenom());
         utilisateur.setEmail(registerRequest.getEmail());
         utilisateur.setPasswordhash(registerRequest.getPassword()); 
-        utilisateur.setRole("USER");
+        utilisateur.setRole(Role.valueOf("USER"));
         utilisateurRepository.save(utilisateur);
 
         Map<String, String> response = new HashMap<>();

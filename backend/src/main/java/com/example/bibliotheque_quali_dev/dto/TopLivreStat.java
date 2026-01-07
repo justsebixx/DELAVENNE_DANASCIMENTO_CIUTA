@@ -7,8 +7,7 @@ public class TopLivreStat {
     public TopLivreStat() {
     }
 
-    public TopLivreStat(Integer idLivre, String titre, int nbEmprunts) {
-        this.idLivre = idLivre;
+    public TopLivreStat(Integer idLivre, String titre, Long nbEmprunts) {
         this.titre = titre;
         this.nbEmprunts = nbEmprunts;
     }
