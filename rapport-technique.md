@@ -46,9 +46,13 @@ Développement d'une application web moderne de gestion de bibliothèque univers
   │   ├── config/
   │   │   ├── AuthInterceptor.java                # Intercepteur d'authentification
   │   │   ├── AuthPrincipal.java                  # Objet principal d'authentification
+  │   │   ├── CorsConfig.java                     # Configuration CORS
   │   │   ├── RequireRoles.java                   # Annotation pour les rôles
-  │   │   └── WebConfig.java                      # Configuration CORS et intercepteurs
+  │   │   ├── SecurityConfig.java                 # Configuration Spring Security
+  │   │   └── WebConfig.java                      # Configuration intercepteurs
   │   ├── controller/
+  │   │   ├── AuthController.java                 # API authentification
+  │   │   ├── DashboardController.java            # API statistiques dashboard
   │   │   ├── EmpruntController.java              # API emprunts
   │   │   ├── LivreController.java                # API livres
   │   │   ├── NotificationController.java         # API notifications
@@ -93,26 +97,39 @@ Développement d'une application web moderne de gestion de bibliothèque univers
   │   ├── App.jsx                                 # Composant racine + routing
   │   ├── main.jsx                                # Point d'entrée React
   │   ├── components/
-  │   │   ├── Header.jsx                          # En-tête de navigation
+  │   │   ├── ErrorBoundary.jsx                   # Gestion des erreurs React
   │   │   ├── Footer.jsx                          # Pied de page
+  │   │   ├── Header.jsx                          # En-tête de navigation
+  │   │   ├── LoadingSpinner.jsx                  # Indicateur de chargement
+  │   │   ├── NotificationBadge.jsx               # Badge de notifications
+  │   │   ├── ProtectedRoute.jsx                  # Protection des routes par rôle
   │   │   └── ScrollToTop.jsx                     # Scroll automatique
   │   ├── pages/
-  │   │   ├── Home.jsx                            # Page d'accueil
-  │   │   ├── Books.jsx                           # Liste et recherche livres
-  │   │   ├── AddBook.jsx                         # Ajout de livre
-  │   │   ├── Admin.jsx                           # Dashboard administrateur
-  │   │   ├── Login.jsx                           # Connexion/Inscription
   │   │   ├── About.jsx                           # À propos
+  │   │   ├── Admin.jsx                           # Dashboard administrateur
   │   │   ├── Contact.jsx                         # Contact
+  │   │   ├── Home.jsx                            # Page d'accueil
   │   │   ├── LegalNotice.jsx                     # Mentions légales
+  │   │   ├── Login.jsx                           # Connexion/Inscription
+  │   │   ├── ManageBooks.jsx                     # Gestion des livres (ADMIN)
+  │   │   ├── MyBorrows.jsx                       # Mes emprunts
+  │   │   ├── NotFound.jsx                        # Page 404
+  │   │   ├── Notifications.jsx                   # Page notifications
   │   │   ├── PrivacyPolicy.jsx                   # Politique de confidentialité
-  │   │   └── NotFound.jsx                        # Page 404
+  │   │   ├── Profile.jsx                         # Profil utilisateur
+  │   │   └── SearchBooks.jsx                     # Recherche et consultation livres
   │   ├── services/
+  │   │   ├── apiService.js                       # Service API générique
   │   │   └── livreService.js                     # Service API livres
   │   └── styles/
-  │       ├── App.css                             # Styles globaux
-  │       ├── Books.css                           # Styles page livres
-  │       └── Admin.css                           # Styles dashboard admin
+  │       ├── Home.css                            # Styles page accueil
+  │       ├── Login.css                           # Styles page connexion
+  │       ├── ManageBooks.css                     # Styles gestion livres
+  │       ├── MyBorrows.css                       # Styles mes emprunts
+  │       ├── Notifications.css                   # Styles notifications
+  │       ├── Profile.css                         # Styles profil
+  │       ├── responsive.css                      # Styles responsive
+  │       └── SearchBooks.css                     # Styles recherche livres
   └── package.json                                # Dépendances npm
 
 /docker-compose.yml                               # Configuration MySQL Docker
@@ -131,6 +148,7 @@ Développement d'une application web moderne de gestion de bibliothèque univers
 
 ### B. Gestion des Emprunts et Retours
 - **Création d'emprunt** : Enregistrement avec date de retour prévue (31 jours par défaut)
+- **Mes emprunts** : Page dédiée pour consulter ses emprunts personnels
 - **Retour de livre** : Marquage de la date de retour effective et libération d'un exemplaire
 - **Suivi des emprunts** : Statut (en cours, rendu, en retard)
 - **Historique** : Consultation de tous les emprunts passés et en cours
@@ -139,18 +157,27 @@ Développement d'une application web moderne de gestion de bibliothèque univers
 ### C. Authentification et Gestion des Utilisateurs
 - **Inscription** : Création de compte avec email unique
 - **Connexion** : Authentification par email/mot de passe avec token de session
+- **Profil utilisateur** : Page dédiée pour consulter et modifier son profil
 - **Rôles** :
   - `USER` : Étudiant (consultation, emprunt personnel)
   - `BIBLIOTHECAIRE` : Bibliothécaire (gestion complète)
   - `ADMIN` : Administrateur (tous les droits)
-- **Sécurité** : Tokens de session, hachage BCrypt des mots de passe
-- **Autorisation** : Intercepteur vérifiant les rôles via annotation `@RequireRoles`
+- **Sécurité** : 
+  - Tokens de session avec expiration
+  - Spring Security configuré (CSRF désactivé pour API REST)
+  - Routes protégées côté frontend avec ProtectedRoute
+  - Hachage BCrypt des mots de passe
+- **Autorisation** : 
+  - Backend : Intercepteur vérifiant les rôles via annotation `@RequireRoles`
+  - Frontend : Composant ProtectedRoute pour routes protégées
 
 ### D. Système de Notifications
 - **Rappel J-30** : Notification 30 jours avant la date de retour prévue
 - **Rappel J-5** : Notification 5 jours avant la date de retour prévue
 - **Types** : RAPPEL, RETARD
 - **Suivi** : Historique des notifications envoyées par emprunt
+- **Interface** : Page dédiée pour consulter toutes ses notifications
+- **Badge** : Indicateur visuel du nombre de notifications non lues
 
 ### E. Tableau de Bord Statistiques (Bibliothécaires)
 - **Vue d'ensemble** :
@@ -169,11 +196,20 @@ Développement d'une application web moderne de gestion de bibliothèque univers
   - Disponibilité par catégorie (Polar Area Chart)
 
 ### F. Interface Utilisateur
-- **Responsive Design** : Adaptation mobile/tablette/desktop
-- **Navigation** : Header avec menu (Accueil, Livres, Admin, Connexion)
-- **Recherche en temps réel** : Filtrage instantané des livres
-- **Feedback utilisateur** : Messages de succès/erreur
-- **Design moderne** : Interface épurée et intuitive
+- **Responsive Design** : Adaptation mobile/tablette/desktop avec fichier CSS dédié
+- **Navigation** : 
+  - Desktop : Header avec menu horizontal (Accueil, Livres, Mes Emprunts, Notifications, Admin, Profil)
+  - Mobile (< 482px) : Menu hamburger avec navigation déroulante verticale
+- **Menu Hamburger** :
+  - Bouton avec animation de transformation en croix (X)
+  - Menu déroulant collé au header sur toute la largeur
+  - Animation fluide avec transition max-height
+  - Fermeture automatique lors du clic sur un lien
+- **Recherche en temps réel** : Filtrage instantané des livres sur la page SearchBooks
+- **Gestion d'erreurs** : ErrorBoundary pour capturer les erreurs React
+- **États de chargement** : LoadingSpinner pour les requêtes asynchrones
+- **Feedback utilisateur** : Messages de succès/erreur avec gestion améliorée via apiService
+- **Design moderne** : Interface épurée et intuitive avec composants réutilisables
 
 ---
 
@@ -227,45 +263,68 @@ SessionToken
 
 **Contrôleurs (API Endpoints) :**
 
+- **AuthController** (`/api/auth`)
+  - `POST /login` : Authentification utilisateur
+  - `POST /register` : Inscription nouvel utilisateur
+  - `POST /logout` : Déconnexion et suppression token
+  - `GET /me` : Récupérer informations utilisateur connecté
+
+- **DashboardController** (`/api/dashboard`)
+  - `GET /stats` : Récupérer statistiques complètes dashboard
+
 - **LivreController** (`/api/livres`)
   - `GET /` : Récupérer tous les livres
   - `GET /{id}` : Récupérer un livre par ID
-  - `POST /` : Ajouter un nouveau livre (BIBLIOTHECAIRE)
-  - `PUT /{id}` : Modifier un livre (BIBLIOTHECAIRE)
-  - `DELETE /{id}` : Supprimer un livre (BIBLIOTHECAIRE)
+  - `POST /` : Ajouter un nouveau livre (ADMIN)
+  - `PUT /{id}` : Modifier un livre (ADMIN)
+  - `DELETE /{id}` : Supprimer un livre (ADMIN)
 
 - **EmpruntController** (`/api/emprunts`)
-  - `GET /` : Récupérer tous les emprunts (BIBLIOTHECAIRE)
+  - `GET /` : Récupérer tous les emprunts (ADMIN)
   - `GET /user/{userId}` : Emprunts d'un utilisateur
   - `POST /` : Créer un emprunt
   - `PUT /{id}/retour` : Marquer un retour
 
 - **UtilisateurController** (`/api/utilisateurs`)
-  - `GET /` : Récupérer tous les utilisateurs (BIBLIOTHECAIRE)
+  - `GET /` : Récupérer tous les utilisateurs (ADMIN)
   - `GET /{id}` : Récupérer un utilisateur par ID
-  - `POST /register` : Inscription
-  - `POST /login` : Connexion
-  - `POST /logout` : Déconnexion
+  - `PUT /{id}` : Modifier un utilisateur
+  - `DELETE /{id}` : Supprimer un utilisateur (ADMIN)
 
 - **NotificationController** (`/api/notifications`)
+  - `GET /` : Récupérer toutes les notifications
+  - `GET /user/{userId}` : Notifications d'un utilisateur
   - `GET /emprunt/{empruntId}` : Notifications par emprunt
-  - `POST /` : Créer une notification (BIBLIOTHECAIRE)
+  - `POST /` : Créer une notification (ADMIN)
+  - `PUT /{id}/mark-read` : Marquer une notification comme lue
 
 ### C. Architecture Frontend
 
 **Structure par composants :**
 
-- **App.jsx** : Routeur principal avec React Router
-- **Header.jsx** : Navigation globale
-- **Footer.jsx** : Pied de page avec liens légaux
+- **App.jsx** : Routeur principal avec React Router et ErrorBoundary
+- **Composants réutilisables** :
+  - Header.jsx : Navigation globale avec badge notifications
+  - Footer.jsx : Pied de page avec liens légaux
+  - ProtectedRoute.jsx : HOC pour protéger les routes selon rôle
+  - ErrorBoundary.jsx : Gestion des erreurs React
+  - LoadingSpinner.jsx : Indicateur de chargement
+  - NotificationBadge.jsx : Badge de notifications
+  - ScrollToTop.jsx : Scroll automatique lors du changement de page
 - **Pages** :
   - Home : Page d'accueil avec présentation
-  - Books : Liste et recherche de livres avec filtrage
-  - AddBook : Formulaire d'ajout de livre
-  - Admin : Dashboard avec graphiques Chart.js
+  - SearchBooks : Recherche et consultation de livres
+  - ManageBooks : Gestion des livres (ajout, modification, suppression - ADMIN)
+  - MyBorrows : Consultation de ses emprunts personnels
+  - Notifications : Liste et gestion des notifications
+  - Profile : Profil utilisateur avec informations personnelles
+  - Admin : Dashboard avec graphiques Chart.js (ADMIN)
   - Login : Authentification (formulaire double connexion/inscription)
+  - About, Contact, LegalNotice, PrivacyPolicy : Pages informatives
+  - NotFound : Page 404
 - **Services** :
-  - livreService.js : Appels API pour les livres avec gestion d'erreurs
+  - apiService.js : Service API générique avec gestion d'erreurs (classe ApiError)
+  - livreService.js : Service API spécifique aux livres
 
 ### D. Flux d'Exécution
 
@@ -284,34 +343,51 @@ SessionToken
 4. Navigation vers page d'accueil
 
 **Flux d'une requête API protégée :**
-1. Client → Requête HTTP avec header `Authorization: Bearer <token>`
-2. AuthInterceptor.preHandle() → Vérification token
-3. SessionTokenRepository → Validation token dans BDD
-4. UtilisateurRepository → Récupération utilisateur
-5. Vérification `@RequireRoles` → Autorisation selon rôle
-6. Controller → Traitement logique métier
-7. Repository → Requête JPA vers MySQL
-8. Response → JSON renvoyé au client
+1. Client → Requête HTTP avec header `Authorization: Bearer <token>` (via apiService)
+2. Spring Security → Autorisation de la requête (CSRF désactivé)
+3. AuthInterceptor.preHandle() → Vérification token
+4. SessionTokenRepository → Validation token dans BDD
+5. UtilisateurRepository → Récupération utilisateur
+6. Vérification `@RequireRoles` → Autorisation selon rôle
+7. Controller → Traitement logique métier
+8. Repository → Requête JPA vers MySQL
+9. Response → JSON renvoyé au client
+10. apiService → Gestion erreur (ApiError) ou retour données
 
 **Flux de recherche de livres (Frontend) :**
-1. Utilisateur saisit dans barre de recherche
-2. `handleSearch()` → Mise à jour `searchTerm` (state)
-3. `useEffect()` → Déclenchement filtrage
-4. `livreService.filterLivres()` → Filtrage local côté client
-5. `setFilteredLivres()` → Mise à jour affichage
-6. Re-render automatique de la liste
+1. Utilisateur accède à SearchBooks.jsx
+2. Chargement initial → `apiService.get('/livres')` → Récupération tous les livres
+3. Utilisateur saisit dans barre de recherche
+4. `handleSearch()` → Mise à jour `searchTerm` (state)
+5. `useEffect()` → Déclenchement filtrage local
+6. Filtrage sur titre/auteur/ISBN/catégorie
+7. `setFilteredLivres()` → Mise à jour affichage
+8. Re-render automatique de la liste avec LoadingSpinner pendant le chargement
+
+**Flux de protection de route (Frontend) :**
+1. Utilisateur tente d'accéder à une route protégée (ex: /admin)
+2. ProtectedRoute.jsx → Vérification token dans localStorage
+3. Si pas de token → Redirection vers /login
+4. Si token présent → Vérification du rôle requis
+5. Si rôle insuffisant → Redirection vers /
+6. Si autorisé → Affichage du composant enfant
 
 ---
 
 ## V. Sécurité et Bonnes Pratiques
 
 ### A. Sécurité
-- **Authentification** : Tokens de session avec expiration
+- **Spring Security** : Configuration avec SecurityConfig (CSRF désactivé pour API REST)
+- **Authentification** : Tokens de session avec expiration stockés en base
 - **Hachage** : Mots de passe hashés avec BCrypt (salt rounds: 10)
-- **Autorisation** : Contrôle d'accès par rôles avec intercepteur
-- **CORS** : Configuration stricte pour localhost:5173 uniquement
+- **Autorisation** : 
+  - Backend : Contrôle d'accès par rôles avec AuthInterceptor et annotation @RequireRoles
+  - Frontend : Routes protégées avec composant ProtectedRoute
+- **CORS** : Configuration dédiée dans CorsConfig pour localhost:5173
 - **Validation** : Validation des entrées côté backend
-- **Exceptions** : Gestion centralisée avec `GlobalExceptionHandler`
+- **Gestion d'erreurs** : 
+  - Backend : GlobalExceptionHandler pour exceptions centralisées
+  - Frontend : ErrorBoundary pour erreurs React + ApiError pour erreurs API
 
 ### B. Bonnes Pratiques Développement
 - **Architecture en couches** : Controller → Service → Repository
@@ -527,18 +603,29 @@ CREATE TABLE session_tokens (
 - **Erreur** : Rouge (#dc3545)
 
 ### B. Composants UI
-- **Header** : Navigation sticky avec logo et menu
+- **Header** : 
+  - Navigation sticky avec logo, menu et badge notifications
+  - Menu hamburger animé pour mobile (< 482px)
+  - Transformation fluide en croix (X) lors de l'ouverture
 - **Cards** : Livres affichés en grille responsive (1-4 colonnes)
 - **Forms** : Validation en temps réel avec messages d'erreur
 - **Buttons** : Boutons primaires/secondaires avec hover effects
-- **Charts** : 6 types de graphiques Chart.js avec légendes interactives
-- **Loading States** : Spinners pendant chargement API
+- **Charts** : 6 types de graphiques Chart.js avec légendes interactives (Admin dashboard)
+- **LoadingSpinner** : Composant dédié pour états de chargement
+- **NotificationBadge** : Badge avec compteur de notifications non lues
+- **ErrorBoundary** : Gestion gracieuse des erreurs React
+- **ProtectedRoute** : Composant HOC pour protection des routes
+- **Mobile Navigation** : Menu déroulant pleine largeur collé au header
 
 ### C. Accessibilité
-- **Responsive** : Breakpoints (mobile < 768px, tablet < 1024px, desktop)
+- **Responsive** : 
+  - Breakpoints (mobile < 482px, tablet < 768px, desktop)
+  - Menu hamburger pour écrans < 482px avec animation fluide
+  - Navigation adaptative selon la taille d'écran
 - **Contraste** : Ratio texte/fond respectant WCAG 2.1
 - **Navigation** : Liens clairs et breadcrumb
 - **Messages** : Feedback utilisateur sur toutes les actions
+- **Mobile-First** : Menu déroulant optimisé pour petits écrans
 
 ---
 
@@ -662,5 +749,9 @@ eslint (9.36.0)                        # Linter JavaScript
 ---
 
 **Dernière mise à jour** : 7 janvier 2026  
-**Version du document** : 1.0  
-**Statut du projet** : fini
+**Version du document** : 1.1  
+**Statut du projet** : En cours
+
+**Changelog :**
+- v1.1 (07/01/2026) : Ajout menu hamburger responsive pour mobile
+- v1.0 (07/01/2026) : Version initiale de la documentation
