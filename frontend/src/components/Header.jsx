@@ -55,6 +55,8 @@ function Header() {
                 <Link to="/" className="nav-link" onClick={closeMenu}>Accueil</Link>
                 <Link to="/search-books" className="nav-link" onClick={closeMenu}>Livres</Link>
                 {isLoggedIn && <Link to="/my-borrows" className="nav-link" onClick={closeMenu}>Mes Emprunts</Link>}
+                {isStaff && <Link to="/manage-books" className="nav-link" onClick={closeMenu}>Gestion Livres</Link>}
+                {isStaff && <Link to="/statistics" className="nav-link" onClick={closeMenu}>Statistiques</Link>}
             </nav>
             <div className="nav-right">
                 {isLoggedIn && <NotificationBadge />}
