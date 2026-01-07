@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,4 +24,12 @@ public interface EmpruntRepository extends JpaRepository<Emprunt, Integer> {
            "GROUP BY l.idLivre, l.titre " +
            "ORDER BY COUNT(e) DESC")
     List<TopLivreStat> findTop5MostBorrowedBooks();
+    
+    // Trouver les emprunts avec une date de retour prévue spécifique et non encore retournés
+    List<Emprunt> findByDateRetourPrevueAndDateRetourEffectiveIsNull(Date dateRetourPrevue);
+    
+    // Trouver les emprunts en retard (date de retour prévue passée et non retournés)
+    @Query("SELECT e FROM Emprunt e WHERE e.dateRetourPrevue < :today AND e.dateRetourEffective IS NULL")
+    List<Emprunt> findOverdueEmprunts(@Param("today") Date today);
 }
+
