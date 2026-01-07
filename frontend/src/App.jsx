@@ -1,10 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import ScrollToTop from './components/ScrollToTop';
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Books from './pages/Books';
 import AddBook from './pages/AddBook';
 import Admin from './pages/Admin';
+import ManageBooks from './pages/ManageBooks';
+import MyBorrows from './pages/MyBorrows';
+import SearchBooks from './pages/SearchBooks';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -23,8 +27,19 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/books" element={<Books />} />
+          <Route path="/search-books" element={<SearchBooks />} />
           <Route path="/add-book" element={<AddBook />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/my-borrows" element={<MyBorrows />} />
+          <Route path="/admin" element={
+            <ProtectedRoute requiredRole="ADMIN">
+              <Admin />
+            </ProtectedRoute>
+          } />
+          <Route path="/manage-books" element={
+            <ProtectedRoute requiredRole="ADMIN">
+              <ManageBooks />
+            </ProtectedRoute>
+          } />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />

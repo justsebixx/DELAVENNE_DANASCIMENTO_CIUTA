@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.sql.Date;
 
+/**
+ * Entité représentant une notification envoyée à un utilisateur.
+ */
 @Entity
 @Table(name = "notifications")
 public class Notification {
@@ -13,6 +16,7 @@ public class Notification {
     private Integer idEmprunt;
     private Date dateEnvoi;
     private String type;
+    private boolean lue = false;
 
     public Notification(Integer idNotif, Integer idEmprunt, Date dateEnvoi) {
         this.idNotif = idNotif;
@@ -54,6 +58,13 @@ public class Notification {
     public void setType(String type) {
         this.type = type;
     }
-}
 
+    public boolean isLue() {
+        return lue;
+    }
+
+    public void setLue(boolean lue) {
+        this.lue = lue;
+    }
+}
 

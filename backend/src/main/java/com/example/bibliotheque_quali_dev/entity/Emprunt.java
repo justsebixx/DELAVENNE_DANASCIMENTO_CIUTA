@@ -15,6 +15,10 @@ public class Emprunt {
     private Date dateRetourEffective;
     enum statut {en_cours,rendu,retard};
 
+    @ManyToOne
+    @JoinColumn(name = "idLivre", insertable = false, updatable = false)
+    private Livre livre;
+
     public Emprunt() {
     }
 
@@ -73,5 +77,13 @@ public class Emprunt {
 
     public void setDateRetourEffective(Date dateRetourEffective) {
         this.dateRetourEffective = dateRetourEffective;
+    }
+
+    public Livre getLivre() {
+        return livre;
+    }
+
+    public void setLivre(Livre livre) {
+        this.livre = livre;
     }
 }

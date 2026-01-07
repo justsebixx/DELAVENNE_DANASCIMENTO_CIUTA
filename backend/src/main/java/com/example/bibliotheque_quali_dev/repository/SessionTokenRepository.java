@@ -7,4 +7,5 @@ import java.time.LocalDateTime;
 
 public interface SessionTokenRepository extends JpaRepository<SessionToken, String> {
     long deleteByExpiresAtBefore(LocalDateTime cutoff);
+    void deleteByToken(String token);
 }

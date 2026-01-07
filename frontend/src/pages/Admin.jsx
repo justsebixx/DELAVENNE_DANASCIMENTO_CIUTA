@@ -47,15 +47,42 @@ const Admin = () => {
   const [message, setMessage] = useState({ type: '', text: '' });
   const [livres, setLivres] = useState([]);
 
-  // Données simulées pour le dashboard
+  // Données pour le dashboard
   const [stats, setStats] = useState({
-    totalLivres: 156,
-    livresDisponibles: 124,
-    livresEmpruntes: 32,
-    totalUtilisateurs: 89,
-    empruntsEnCours: 45,
-    empruntsEnRetard: 7,
+    totalLivres: 0,
+    livresDisponibles: 0,
+    livresEmpruntes: 0,
+    totalUtilisateurs: 0,
+    empruntsEnCours: 0,
+    empruntsEnRetard: 0,
   });
+
+  const [topLivres, setTopLivres] = useState([]);
+
+  // Charger les statistiques au montage du composant
+  useEffect(() => {
+    fetchDashboardStats();
+  }, []);
+
+  const fetchDashboardStats = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/dashboard/stats');
+      if (response.ok) {
+        const data = await response.json();
+        setStats({
+          totalLivres: data.totalLivres,
+          livresDisponibles: data.livresDisponibles,
+          livresEmpruntes: data.livresEmpruntes,
+          totalUtilisateurs: data.totalUtilisateurs,
+          empruntsEnCours: data.empruntsEnCours,
+          empruntsEnRetard: data.empruntsEnRetard,
+        });
+        setTopLivres(data.topLivres || []);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des statistiques:', error);
+    }
+  };
 
   // Catégories pour le formulaire
   const categories = [
@@ -178,10 +205,10 @@ const Admin = () => {
 
   // Données pour le graphique PolarArea - Top 5 livres empruntés
   const polarChartData = {
-    labels: ['1984 (G. Orwell)', 'Le Petit Prince', 'Harry Potter', 'Sapiens', 'Clean Code'],
+    labels: topLivres.slice(0, 5).map(livre => livre.titre),
     datasets: [
       {
-        data: [45, 38, 35, 28, 22],
+        data: topLivres.slice(0, 5).map(livre => livre.nbEmprunts),
         backgroundColor: [
           'rgba(255, 99, 132, 0.7)',
           'rgba(54, 162, 235, 0.7)',

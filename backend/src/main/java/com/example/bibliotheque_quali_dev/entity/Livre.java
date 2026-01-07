@@ -1,6 +1,9 @@
 package com.example.bibliotheque_quali_dev.entity;
 import jakarta.persistence.*;
 
+/**
+ * Entité représentant un livre dans la bibliothèque.
+ */
 @Entity
 @Table(name = "livres")
 public class Livre{
@@ -14,12 +17,16 @@ public class Livre{
     private String categorie;
     private String isbn;
     private Integer annee;
-    private Integer nb_exemplaires;
-    private Integer nb_disponibles;
+    
+    @Column(name = "nb_exemplaires")
+    private Integer nbExemplaires;
+    
+    @Column(name = "nb_disponibles")
+    private Integer nbDisponibles;
 
     public Livre(Integer idLivre, String titre, String auteur,
                  String categorie, String isbn, Integer annee,
-                 Integer nb_exemplaires, Integer nb_disponibles)
+                 Integer nbExemplaires, Integer nbDisponibles)
     {
         this.idLivre = idLivre;
         this.titre = titre;
@@ -27,8 +34,8 @@ public class Livre{
         this.categorie = categorie;
         this.isbn = isbn;
         this.annee = annee;
-        this.nb_exemplaires = nb_exemplaires;
-        this.nb_disponibles = nb_disponibles;
+        this.nbExemplaires = nbExemplaires;
+        this.nbDisponibles = nbDisponibles;
     }
 
     public Livre() {
@@ -83,19 +90,19 @@ public class Livre{
         this.annee = annee;
     }
 
-    public Integer getNb_exemplaires() {
-        return nb_exemplaires;
+    public Integer getNbExemplaires() {
+        return nbExemplaires;
     }
 
-    public void setNb_exemplaires(Integer nb_exemplaires) {
-        this.nb_exemplaires = nb_exemplaires;
+    public void setNbExemplaires(Integer nbExemplaires) {
+        this.nbExemplaires = nbExemplaires;
     }
 
-    public Integer getNb_disponibles() {
-        return nb_disponibles;
+    public Integer getNbDisponibles() {
+        return nbDisponibles;
     }
 
-    public void setNb_disponibles(Integer nb_disponibles) {
-        this.nb_disponibles = nb_disponibles;
+    public void setNbDisponibles(Integer nbDisponibles) {
+        this.nbDisponibles = nbDisponibles;
     }
 }

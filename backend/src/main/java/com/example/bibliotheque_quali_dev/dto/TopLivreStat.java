@@ -1,7 +1,6 @@
 package com.example.bibliotheque_quali_dev.dto;
 
 public class TopLivreStat {
-    private Integer idLivre;
     private String titre;
     private long nbEmprunts;
 
@@ -12,14 +11,6 @@ public class TopLivreStat {
         this.idLivre = idLivre;
         this.titre = titre;
         this.nbEmprunts = nbEmprunts;
-    }
-
-    public Integer getIdLivre() {
-        return idLivre;
-    }
-
-    public void setIdLivre(Integer idLivre) {
-        this.idLivre = idLivre;
     }
 
     public String getTitre() {

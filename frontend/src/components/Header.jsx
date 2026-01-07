@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 
 function Header() {
+    const isLoggedIn = !!localStorage.getItem('token');
+
     return (
         <header className="header">
             <nav className="nav-left">
                 <Link to="/" className="nav-link">Accueil</Link>
                 <Link to="/books" className="nav-link">Livres</Link>
-                <Link to="/admin" className="nav-link nav-admin">🔐 Admin</Link>
+                {isLoggedIn && <Link to="/my-borrows" className="nav-link">Mes Emprunts</Link>}
             </nav>
             <div className="search-container">
                 <input type="text" className="search-input" placeholder="Rechercher un livre..." />
