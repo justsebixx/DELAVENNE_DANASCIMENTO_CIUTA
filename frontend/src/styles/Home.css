@@ -6,7 +6,6 @@
 }
 
 .hero-section {
-    width: 100%;
     min-height: 600px;
     display: flex;
     align-items: center;
@@ -227,7 +226,6 @@
     }
 
     .hero-btn {
-        width: 100%;
         max-width: 300px;
     }
 

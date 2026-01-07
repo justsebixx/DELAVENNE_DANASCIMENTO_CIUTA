@@ -7,6 +7,7 @@ function Header() {
     const role = localStorage.getItem('role');
     const navigate = useNavigate();
     const [showDropdown, setShowDropdown] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     const isAdmin = role === 'ADMIN';
@@ -30,17 +31,30 @@ function Header() {
         localStorage.removeItem('userId');
         localStorage.removeItem('role');
         setShowDropdown(false);
+        setMenuOpen(false);
         navigate('/login');
+    };
+
+    const closeMenu = () => {
+        setMenuOpen(false);
     };
 
     return (
         <header className="header">
-            <nav className="nav-center">
-                <Link to="/" className="nav-link">Accueil</Link>
-                <Link to="/search-books" className="nav-link">Livres</Link>
-                {isLoggedIn && <Link to="/my-borrows" className="nav-link">Mes Emprunts</Link>}
-                {isStaff && <Link to="/manage-books" className="nav-link">Gestion Livres</Link>}
-                {isStaff && <Link to="/statistics" className="nav-link">Statistiques</Link>}
+            <button 
+                className="hamburger" 
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Menu"
+            >
+                <span className={menuOpen ? "active" : ""}></span>
+                <span className={menuOpen ? "active" : ""}></span>
+                <span className={menuOpen ? "active" : ""}></span>
+            </button>
+
+            <nav className={`nav-center ${menuOpen ? 'menu-open' : ''}`}>
+                <Link to="/" className="nav-link" onClick={closeMenu}>Accueil</Link>
+                <Link to="/search-books" className="nav-link" onClick={closeMenu}>Livres</Link>
+                {isLoggedIn && <Link to="/my-borrows" className="nav-link" onClick={closeMenu}>Mes Emprunts</Link>}
             </nav>
             <div className="nav-right">
                 {isLoggedIn && <NotificationBadge />}
