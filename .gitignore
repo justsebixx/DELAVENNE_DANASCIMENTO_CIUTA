@@ -15,10 +15,24 @@ dist-ssr
 
 # Maven / Java build outputs
 **/target/
+**/build/
+**/.mvn/wrapper/maven-wrapper.jar
+**/.mvn/wrapper/maven-wrapper.properties
+**/mvnw
+**/mvnw.cmd
 
 # IntelliJ / IDE files
 .idea/
 *.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse
+.settings/
+.classpath
+.project
+bin/
 
 # Editor directories and files
 .vscode/*

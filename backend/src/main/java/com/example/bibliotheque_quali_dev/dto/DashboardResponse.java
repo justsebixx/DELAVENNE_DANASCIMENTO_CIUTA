@@ -3,53 +3,63 @@ package com.example.bibliotheque_quali_dev.dto;
 import java.util.List;
 
 public class DashboardResponse {
-    private long totalEmprunts;
-    private long empruntsEnCours;
-    private long empruntsEnRetard;
-    private double tauxRetard;
+    private int totalLivres;
+    private int livresDisponibles;
+    private int livresEmpruntes;
+    private int totalUtilisateurs;
+    private int empruntsEnCours;
+    private int empruntsEnRetard;
     private List<TopLivreStat> topLivres;
 
     public DashboardResponse() {
     }
 
-    public DashboardResponse(long totalEmprunts, long empruntsEnCours, long empruntsEnRetard, double tauxRetard, List<TopLivreStat> topLivres) {
-        this.totalEmprunts = totalEmprunts;
-        this.empruntsEnCours = empruntsEnCours;
-        this.empruntsEnRetard = empruntsEnRetard;
-        this.tauxRetard = tauxRetard;
-        this.topLivres = topLivres;
+    public int getTotalLivres() {
+        return totalLivres;
     }
 
-    public long getTotalEmprunts() {
-        return totalEmprunts;
+    public void setTotalLivres(int totalLivres) {
+        this.totalLivres = totalLivres;
     }
 
-    public void setTotalEmprunts(long totalEmprunts) {
-        this.totalEmprunts = totalEmprunts;
+    public int getLivresDisponibles() {
+        return livresDisponibles;
     }
 
-    public long getEmpruntsEnCours() {
+    public void setLivresDisponibles(int livresDisponibles) {
+        this.livresDisponibles = livresDisponibles;
+    }
+
+    public int getLivresEmpruntes() {
+        return livresEmpruntes;
+    }
+
+    public void setLivresEmpruntes(int livresEmpruntes) {
+        this.livresEmpruntes = livresEmpruntes;
+    }
+
+    public int getTotalUtilisateurs() {
+        return totalUtilisateurs;
+    }
+
+    public void setTotalUtilisateurs(int totalUtilisateurs) {
+        this.totalUtilisateurs = totalUtilisateurs;
+    }
+
+    public int getEmpruntsEnCours() {
         return empruntsEnCours;
     }
 
-    public void setEmpruntsEnCours(long empruntsEnCours) {
+    public void setEmpruntsEnCours(int empruntsEnCours) {
         this.empruntsEnCours = empruntsEnCours;
     }
 
-    public long getEmpruntsEnRetard() {
+    public int getEmpruntsEnRetard() {
         return empruntsEnRetard;
     }
 
-    public void setEmpruntsEnRetard(long empruntsEnRetard) {
+    public void setEmpruntsEnRetard(int empruntsEnRetard) {
         this.empruntsEnRetard = empruntsEnRetard;
-    }
-
-    public double getTauxRetard() {
-        return tauxRetard;
-    }
-
-    public void setTauxRetard(double tauxRetard) {
-        this.tauxRetard = tauxRetard;
     }
 
     public List<TopLivreStat> getTopLivres() {
