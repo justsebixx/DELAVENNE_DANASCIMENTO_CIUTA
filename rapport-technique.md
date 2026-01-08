@@ -448,8 +448,11 @@ npm run dev
 Application accessible sur `http://localhost:5173`
 
 **5. Connexion initiale :**
-- Email : `jean.dupont@email.com` (ADMIN)
-- Mot de passe : `password123`
+
+- Admin : admin@email.com / password123
+- Bibliothécaire : bibliothecaire@email.com / password123
+- Enseignant : marie.dubois@email.com / password123
+- Étudiant : sophie.martin@email.com / password123
 
 ### C. Configuration
 
@@ -746,7 +749,7 @@ Pour tout problème veuillez nous contacter à cette adresse mail : sebastian-cr
 
 **Dernière mise à jour** : 8 janvier 2026  
 **Version du document** : 1.1  
-**Statut du projet** : En cours
+**Statut du projet** : Finalisé
 
 **Changelog :**
 - v1.1 (07/01/2026) : Ajout menu hamburger responsive pour mobile
