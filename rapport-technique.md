@@ -106,17 +106,17 @@ Développement d'une application web moderne de gestion de bibliothèque univers
   │   │   └── ScrollToTop.jsx                     # Scroll automatique
   │   ├── pages/
   │   │   ├── About.jsx                           # À propos
-  │   │   ├── Admin.jsx                           # Dashboard administrateur
   │   │   ├── Contact.jsx                         # Contact
   │   │   ├── Home.jsx                            # Page d'accueil
   │   │   ├── LegalNotice.jsx                     # Mentions légales
   │   │   ├── Login.jsx                           # Connexion/Inscription
-  │   │   ├── ManageBooks.jsx                     # Gestion des livres (ADMIN)
+  │   │   ├── ManageBooks.jsx                     # Gestion des livres (BIBLIOTHECAIRE/ADMIN)
   │   │   ├── MyBorrows.jsx                       # Mes emprunts
   │   │   ├── NotFound.jsx                        # Page 404
   │   │   ├── Notifications.jsx                   # Page notifications
   │   │   ├── PrivacyPolicy.jsx                   # Politique de confidentialité
   │   │   ├── Profile.jsx                         # Profil utilisateur
+  │   │   ├── Statistics.jsx                      # Statistiques (BIBLIOTHECAIRE/ADMIN)
   │   │   └── SearchBooks.jsx                     # Recherche et consultation livres
   │   ├── services/
   │   │   ├── apiService.js                       # Service API générique
@@ -198,7 +198,7 @@ Développement d'une application web moderne de gestion de bibliothèque univers
 ### F. Interface Utilisateur
 - **Responsive Design** : Adaptation mobile/tablette/desktop avec fichier CSS dédié
 - **Navigation** : 
-  - Desktop : Header avec menu horizontal (Accueil, Livres, Mes Emprunts, Notifications, Admin, Profil)
+  - Desktop : Header avec menu horizontal (Accueil, Livres, Mes Emprunts, Notifications, Statistiques, Profil)
   - Mobile (< 482px) : Menu hamburger avec navigation déroulante verticale
 - **Menu Hamburger** :
   - Bouton avec animation de transformation en croix (X)
@@ -314,11 +314,11 @@ SessionToken
 - **Pages** :
   - Home : Page d'accueil avec présentation
   - SearchBooks : Recherche et consultation de livres
-  - ManageBooks : Gestion des livres (ajout, modification, suppression - ADMIN)
+  - ManageBooks : Gestion des livres (ajout, modification, suppression - BIBLIOTHECAIRE/ADMIN)
   - MyBorrows : Consultation de ses emprunts personnels
   - Notifications : Liste et gestion des notifications
   - Profile : Profil utilisateur avec informations personnelles
-  - Admin : Dashboard avec graphiques Chart.js (ADMIN)
+  - Statistics : Dashboard avec graphiques Chart.js (BIBLIOTHECAIRE/ADMIN)
   - Login : Authentification (formulaire double connexion/inscription)
   - About, Contact, LegalNotice, PrivacyPolicy : Pages informatives
   - NotFound : Page 404
@@ -365,7 +365,7 @@ SessionToken
 8. Re-render automatique de la liste avec LoadingSpinner pendant le chargement
 
 **Flux de protection de route (Frontend) :**
-1. Utilisateur tente d'accéder à une route protégée (ex: /admin)
+1. Utilisateur tente d'accéder à une route protégée (ex: /manage-books)
 2. ProtectedRoute.jsx → Vérification token dans localStorage
 3. Si pas de token → Redirection vers /login
 4. Si token présent → Vérification du rôle requis
@@ -413,7 +413,7 @@ SessionToken
 ### A. Prérequis
 - **Java** : JDK 25 ou supérieur
 - **Maven** : 3.6+
-- **Node.js** : 18+ avec npm
+- **Node.js** : 20.19+ (ou 22.12+) avec npm
 - **Docker** : Docker Desktop (pour MySQL)
 - **Mémoire** : 4 Go RAM minimum
 
@@ -427,15 +427,15 @@ cd DELAVENNE_DANASCIMENTO_CIUTA
 
 **2. Démarrer MySQL avec Docker :**
 ```bash
-docker-compose up -d
+docker compose up -d
+# (ou: docker-compose up -d)
 ```
 Attendre ~10 secondes que MySQL soit prêt.
 
 **3. Lancer le Backend :**
 ```bash
 cd backend
-mvnw.cmd spring-boot:run
-# Ou sur Linux/Mac: ./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 API accessible sur `http://localhost:8080/api`
 
@@ -455,7 +455,7 @@ Application accessible sur `http://localhost:5173`
 
 **Backend (`application.properties`) :**
 ```properties
-spring.datasource.url=jdbc:mysql://localhost/bibliotheque
+spring.datasource.url=jdbc:mysql://localhost:3306/bibliotheque
 spring.datasource.username=bibli
 spring.datasource.password=mdp123
 server.servlet.context-path=/api
@@ -481,16 +481,16 @@ server: {
 - Localisation : `src/test/java/com/example/bibliotheque_quali_dev/`
 - Classe de base : `BibliothequeQualiDevApplicationTests.java`
 
-**Tests à implémenter :**
-- Repositories : CRUD sur chaque entité
-- Services : Logique métier (calcul dates, génération tokens)
-- Controllers : Endpoints API avec MockMvc
-- Exceptions : Cas d'erreur (livre indisponible, emprunt déjà retourné)
+**Tests existants :**
+- Services : Auth, Livres, Emprunts, Notifications
+- Controllers : Livres, Emprunts, Notifications
+
+Voir aussi le fichier [tests-realises.md](tests-realises.md) (liste de 10 tests exemples).
 
 **Exécution :**
 ```bash
 cd backend
-mvnw.cmd test
+mvn test
 ```
 
 ### B. Tests Fonctionnels
@@ -610,7 +610,7 @@ CREATE TABLE session_tokens (
 - **Cards** : Livres affichés en grille responsive (1-4 colonnes)
 - **Forms** : Validation en temps réel avec messages d'erreur
 - **Buttons** : Boutons primaires/secondaires avec hover effects
-- **Charts** : 6 types de graphiques Chart.js avec légendes interactives (Admin dashboard)
+- **Charts** : 6 types de graphiques Chart.js avec légendes interactives (dashboard statistiques)
 - **LoadingSpinner** : Composant dédié pour états de chargement
 - **NotificationBadge** : Badge avec compteur de notifications non lues
 - **ErrorBoundary** : Gestion gracieuse des erreurs React
