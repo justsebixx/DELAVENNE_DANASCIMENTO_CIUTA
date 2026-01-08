@@ -38,6 +38,9 @@ lerna-debug.log*
 *.ipr
 out/
 
+# Project docs to ignore
+**/HELP.md
+
 # Eclipse
 .settings/
 .classpath
