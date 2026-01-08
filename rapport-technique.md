@@ -728,19 +728,15 @@ eslint (9.36.0)                        # Linter JavaScript
 ### Livrables
 1. ✅ Code source avec historique Git
 2. ✅ Documentation technique (ce document)
-3. ⏳ Rapport de tests (à compléter)
-4. ⏳ Démonstration live (à planifier)
+3. ✅ Rapport de tests
 
 ---
 
 ## XIV. Contact et Support
 
-### A. Problèmes Connus
-- **Configuration MySQL** : Le commentaire dans `application.properties` indique un problème d'accès utilisateur. Recommandation : utiliser `root` avec `mdp123` pour tous les membres de l'équipe.
-- **CORS** : Si erreur CORS, vérifier que le frontend tourne bien sur port 5173.
-- **Données initiales** : Si `data.sql` ne s'exécute pas, vérifier `spring.jpa.defer-datasource-initialization=true`.
+Pour tout problème veuillez nous contacter à cette adresse mail : sebastian-cristian.ciuta@etud-u.picardie.fr
 
-### B. Ressources
+### Ressources
 - **Documentation Spring Boot** : https://spring.io/projects/spring-boot
 - **Documentation React** : https://react.dev
 - **Chart.js** : https://www.chartjs.org
@@ -748,7 +744,7 @@ eslint (9.36.0)                        # Linter JavaScript
 
 ---
 
-**Dernière mise à jour** : 7 janvier 2026  
+**Dernière mise à jour** : 8 janvier 2026  
 **Version du document** : 1.1  
 **Statut du projet** : En cours
 
