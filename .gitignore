@@ -32,7 +32,7 @@ lerna-debug.log*
 *.class
 
 # IntelliJ / IDE files
-.idea/
+**/.idea/
 *.iml
 *.iws
 *.ipr
