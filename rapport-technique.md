@@ -449,10 +449,10 @@ Application accessible sur `http://localhost:5173`
 
 **5. Connexion initiale :**
 
-Admin : admin@email.com / password123
-Bibliothécaire : bibliothecaire@email.com / password123
-Enseignant : marie.dubois@email.com / password123
-Étudiant : sophie.martin@email.com / password123
+- Admin : admin@email.com / password123
+- Bibliothécaire : bibliothecaire@email.com / password123
+- Enseignant : marie.dubois@email.com / password123
+- Étudiant : sophie.martin@email.com / password123
 
 ### C. Configuration
 
